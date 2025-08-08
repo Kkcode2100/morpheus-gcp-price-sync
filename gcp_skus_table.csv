@@ -1,0 +1,36 @@
+skuId,serviceDisplayName,description,resourceFamily,resourceGroup,usageType,regions,currencyCode,priceUnits,priceNanos,usageUnit
+05C1-AF31-E5F4,Kubernetes Engine,Autopilot Balanced Spot Pod Memory Requests (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,2878500,GiBy.h
+0CB0-FD44-34AF,Kubernetes Engine,Autopilot Pod mCPU Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,59800,h
+0E5C-D3D9-1852,Kubernetes Engine,Autopilot SSD Pod Ephemeral Storage Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,186800,GiBy.h
+11B6-11FE-F90B,Kubernetes Engine,Autopilot Performance Spot CPU Premium (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,1613,h
+16D5-3382-03B5,Kubernetes Engine,Autopilot Pod Ephemeral Storage Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,73700,GiBy.h
+1953-1A54-5EB3,Kubernetes Engine,Autopilot Balanced Pod Memory Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,9595000,GiBy.h
+2572-F0E7-966C,Kubernetes Engine,Autopilot Performance CPU Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,5378,h
+3630-EF1B-2849,Kubernetes Engine,Kubernetes Engine Committed Use Discounts - asia-southeast2 - 3 Year,Compute,Kubernetes,Commit3Yr,asia-southeast2,USD,1,0,h
+3817-56BC-C0A9,Kubernetes Engine,Autopilot Accelerator Spot Memory Premium (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,175000,GiBy.h
+3B4C-25A0-CEBC,Kubernetes Engine,Autopilot Local SSD Spot Premium (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,9413000,GiBy.mo
+3CF0-9A4A-F905,Kubernetes Engine,Autopilot Accelerator CPU Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,4034,h
+4C42-AAD5-7847,Kubernetes Engine,Autopilot Accelerator Spot CPU Premium (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,1479,h
+4EF9-AB7B-6428,Kubernetes Engine,Autopilot Spot Pod mCPU Requests (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,18000,h
+5757-497E-E4B3,Kubernetes Engine,Autopilot Balanced Spot Pod mCPU Requests (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,26000,h
+5C5A-9185-7772,Kubernetes Engine,Autopilot Spot Pod Memory Requests (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,1985800,GiBy.h
+5EB6-6DF0-9F5C,Kubernetes Engine,Autopilot Performance Spot Memory Premium (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,202000,GiBy.h
+6734-B635-4444,Kubernetes Engine,Autopilot Performance Memory Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,672000,GiBy.h
+69BD-4ED5-A9D4,Kubernetes Engine,Commitment - dollar based v1: Kubernetes Engine Autopilot asia-southeast2 for 1 year,Compute,Kubernetes,Commit1Yr,asia-southeast2,USD,0,8000000,h
+6B92-A835-08AB,Kubernetes Engine,Zonal Kubernetes Clusters,Compute,Kubernetes,OnDemand,global,USD,0,100000000,h
+6E15-CD04-4DC0,Kubernetes Engine,Extended Period Kubernetes Clusters,Compute,Kubernetes,OnDemand,global,USD,0,500000000,h
+8572-D615-AD9D,Kubernetes Engine,Kubernetes Engine Committed Use Discounts - asia-southeast2 - 1 Year,Compute,Kubernetes,Commit1Yr,asia-southeast2,USD,1,0,h
+9115-85B4-0CDF,Kubernetes Engine,Autopilot T4 Spot Premium (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,22859,h
+A0BC-713E-9497,Kubernetes Engine,Autopilot T4 Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,56477,h
+A9A4-A18E-783C,Kubernetes Engine,Autopilot Scale-Out x86 Pod Memory Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,8340300,GiBy.h
+AB2C-4C01-B3AE,Kubernetes Engine,Commitment - dollar based v1: Kubernetes Engine Autopilot asia-southeast2 for 3 years,Compute,Kubernetes,Commit3Yr,asia-southeast2,USD,0,5500000,h
+B561-BFBD-1264,Kubernetes Engine,Regional Kubernetes Clusters,Compute,Kubernetes,OnDemand,global,USD,0,100000000,h
+BC38-B6DE-1EC1,Kubernetes Engine,Autopilot Local SSD Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,12102000,GiBy.mo
+C12E-1F7A-CCAC,Kubernetes Engine,Autopilot Pod Memory Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,6619300,GiBy.h
+CC9D-B9D1-C020,Kubernetes Engine,Autopilot Balanced Pod mCPU Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,86700,h
+D03E-716D-8010,Kubernetes Engine,Autopilot Scale-Out x86 Spot Pod Memory Requests (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,2502100,GiBy.h
+D6AF-5E7B-F9E5,Kubernetes Engine,Autopilot Scale-Out x86 Pod mCPU Requests (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,75400,h
+E1C3-D5F6-1F48,Kubernetes Engine,Autopilot PD Balanced Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,16136000,GiBy.mo
+F52D-A61F-C7D1,Kubernetes Engine,Autopilot Kubernetes Clusters,Compute,Kubernetes,OnDemand,global,USD,0,100000000,h
+F96D-D24A-63BB,Kubernetes Engine,Autopilot Accelerator Memory Premium (asia-southeast2),Compute,Kubernetes,OnDemand,asia-southeast2,USD,0,471000,GiBy.h
+FDF3-1B2D-A39B,Kubernetes Engine,Autopilot Scale-Out x86 Spot Pod mCPU Requests (asia-southeast2),Compute,Kubernetes,Preemptible,asia-southeast2,USD,0,22600,h

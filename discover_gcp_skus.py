@@ -54,6 +54,7 @@ except ImportError as e:
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 SERVICE_PLANS_FILE = "service_plans.json"
 OUTPUT_FILE = "gcp_skus.json"
+OUTPUT_SERVICES_FILE = "gcp_services.json"
 
 # Service mapping for different GCP services
 SERVICE_MAPPING = {
@@ -589,11 +590,41 @@ def save_skus_to_file(skus: List[Dict], file_path: str, metadata: Dict):
         raise
 
 
+def save_services_to_file(services: List[Dict], file_path: str):
+    """Save GCP billing services to JSON file for human review."""
+    logger.info(f"Saving {len(services)} services to {file_path}")
+    try:
+        minimal_services = []
+        for s in services:
+            display_name = s.get('displayName') or s.get('name', '')
+            name = s.get('name') or ''
+            service_id = s.get('serviceId') or name.split('/')[-1]
+            minimal_services.append({
+                'displayName': display_name,
+                'name': name,
+                'serviceId': service_id
+            })
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump({
+                'services': minimal_services,
+                'metadata': {
+                    'timestamp': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()),
+                    'note': 'Dumped from GCP Billing Catalog prior to SKU/pricing fetch'
+                }
+            }, f, indent=2, ensure_ascii=False)
+        logger.info(f"Successfully saved services to {file_path}")
+    except Exception as e:
+        logger.error(f"Error saving services to file: {e}")
+        raise
+
+
 def parse_arguments():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description='Discover GCP SKUs aligned to Morpheus service plans')
     parser.add_argument('--region', default='asia-southeast2', 
                         help='GCP region to filter SKUs (default: asia-southeast2)')
+    parser.add_argument('--dump-services-only', action='store_true',
+                        help='Only fetch and dump the list of GCP billing services, then exit')
     return parser.parse_args()
 
 
@@ -604,7 +635,10 @@ def main():
     # Parse command line arguments
     args = parse_arguments()
     region = args.region
+    dump_services_only = args.dump_services_only
     logger.info(f"Configured region: {region}")
+    if dump_services_only:
+        logger.info("Running in dump-services-only mode")
     
     # Google Cloud API libraries missing will trigger REST fallback via gcloud if available
     
@@ -660,6 +694,12 @@ def main():
         # Step 5: Get services and find relevant service IDs
         logger.info("Step 5: Finding relevant GCP services")
         services = gcp_client.get_services()
+        
+        # Save the full services list for human review
+        save_services_to_file(services, OUTPUT_SERVICES_FILE)
+        if dump_services_only:
+            logger.info("Services dumped successfully. Exiting as requested by --dump-services-only")
+            return
         
         # Get service IDs for all relevant services
         all_service_names = set()
@@ -733,6 +773,7 @@ def main():
         if plans_without_skus:
             logger.warning(f"Plans with no matching SKUs ({len(plans_without_skus)}): {plans_without_skus}")
         logger.info(f"Results saved to: {OUTPUT_FILE}")
+        logger.info(f"Services saved to: {OUTPUT_SERVICES_FILE}")
         logger.info("GCP SKU discovery completed successfully")
         
     except KeyboardInterrupt:
