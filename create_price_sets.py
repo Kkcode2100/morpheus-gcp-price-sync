@@ -30,8 +30,12 @@ import json
 import logging
 import requests
 import time
-from typing import Dict, List, Any, Optional
+import urllib3
+from typing import Optional, Dict, Any, List
 from collections import defaultdict
+
+# Disable SSL warnings for self-signed certificates
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configure logging
 logging.basicConfig(
@@ -51,6 +55,9 @@ class MorpheusAPIClient:
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json'
         })
+        # Disable SSL verification for self-signed certificates
+        self.session.verify = False
+        logger.warning("SSL certificate verification disabled - this is acceptable for self-signed certificates but should be used with caution in production")
     
     def make_request(self, method: str, endpoint: str, data: Dict = None, params: Dict = None, max_retries: int = 3) -> requests.Response:
         """Make HTTP request with retry logic"""
@@ -58,12 +65,18 @@ class MorpheusAPIClient:
         
         for attempt in range(max_retries):
             try:
-                response = self.session.request(method, url, json=data, params=params)
+                response = self.session.request(method, url, json=data, params=params, verify=False)
                 logger.debug(f"{method} {url} - Status: {response.status_code}")
                 
                 if response.status_code < 500:  # Don't retry on client errors
                     return response
                     
+            except requests.exceptions.SSLError as e:
+                if "CERTIFICATE_VERIFY_FAILED" in str(e):
+                    logger.warning(f"SSL certificate verification failed (attempt {attempt + 1}/{max_retries}): {e}")
+                    logger.warning("This is expected behavior with self-signed certificates - continuing with verification disabled")
+                else:
+                    logger.warning(f"SSL error (attempt {attempt + 1}/{max_retries}): {e}")
             except requests.exceptions.RequestException as e:
                 logger.warning(f"Request failed (attempt {attempt + 1}/{max_retries}): {e}")
                 
