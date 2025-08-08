@@ -30,6 +30,14 @@ import sys
 import time
 from typing import List, Dict, Optional, Set, Tuple
 import urllib3
+import subprocess
+try:
+    import requests
+    REQUESTS_AVAILABLE = True
+except ImportError as e:
+    REQUESTS_AVAILABLE = False
+    print(f"Requests library not available: {e}")
+    print("Please install: pip install requests")
 
 # Google Cloud Billing API
 try:
@@ -204,6 +212,137 @@ class GCPBillingClient:
         
         logger.info(f"Successfully retrieved {len(skus)} total SKUs, {len(filtered_skus)} after region filtering")
         return filtered_skus
+
+
+# --- REST Fallback using gcloud access token ---
+API_BASE_URL = "https://cloudbilling.googleapis.com/v1"
+
+
+def obtain_access_token_from_gcloud() -> Optional[str]:
+    """Obtain an OAuth2 access token using gcloud. Returns None if gcloud is not available."""
+    try:
+        completed = subprocess.run(
+            ["gcloud", "auth", "print-access-token"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            text=True,
+        )
+        if completed.returncode == 0:
+            token = completed.stdout.strip()
+            if token:
+                return token
+        logger.error(f"Failed to get access token from gcloud (exit {completed.returncode}): {completed.stderr.strip()}")
+        return None
+    except FileNotFoundError:
+        logger.error("gcloud CLI not found. Install Google Cloud SDK or install google-auth and google-api-python-client Python packages.")
+        return None
+
+
+class GCPBillingRestClient:
+    """REST client for Cloud Billing Catalog using requests and optional OAuth token."""
+
+    def __init__(self, access_token: Optional[str]):
+        self.access_token = access_token
+        if access_token:
+            logger.info("Initialized REST client with gcloud access token")
+        else:
+            logger.info("Initialized REST client without token; attempting unauthenticated public catalog access")
+
+    def _headers(self) -> Dict[str, str]:
+        headers = {"Accept": "application/json"}
+        if self.access_token:
+            headers["Authorization"] = f"Bearer {self.access_token}"
+        return headers
+
+    def _retry_request(self, method: str, url: str, params: Optional[Dict] = None, max_retries: int = 3) -> Dict:
+        last_error: Optional[Exception] = None
+        for attempt in range(max_retries):
+            try:
+                response = requests.request(method, url, headers=self._headers(), params=params, timeout=60)
+                if response.status_code == 401 and self.access_token is None:
+                    # Unauthorized without token; propagate error
+                    response.raise_for_status()
+                if response.status_code >= 500:
+                    raise Exception(f"Server error {response.status_code}: {response.text[:200]}")
+                response.raise_for_status()
+                return response.json()
+            except Exception as e:
+                last_error = e
+                if attempt == max_retries - 1:
+                    logger.error(f"Request failed after {max_retries} attempts: {e}")
+                    raise
+                wait_time = 2 ** attempt
+                logger.warning(f"Request failed (attempt {attempt + 1}/{max_retries}), retrying in {wait_time}s: {e}")
+                time.sleep(wait_time)
+        raise last_error  # type: ignore
+
+    def get_services(self, page_size: int = 200) -> List[Dict]:
+        logger.info("Fetching GCP billing services via REST...")
+        services: List[Dict] = []
+        next_page_token: Optional[str] = None
+        
+        while True:
+            params: Dict[str, object] = {"pageSize": page_size}
+            if next_page_token:
+                params["pageToken"] = next_page_token
+            url = f"{API_BASE_URL}/services"
+            data = self._retry_request("GET", url, params=params)
+            batch = data.get("services", [])
+            services.extend(batch)
+            logger.info(f"Retrieved {len(batch)} services (total: {len(services)})")
+            next_page_token = data.get("nextPageToken")
+            if not next_page_token:
+                break
+            time.sleep(0.1)
+        logger.info(f"Successfully retrieved {len(services)} total services")
+        return services
+
+    def find_services_by_names(self, services: List[Dict], service_names: List[str]) -> Dict[str, str]:
+        # Reuse same logic as SDK client
+        found: Dict[str, str] = {}
+        for service in services:
+            display_name = service.get('displayName', '')
+            service_id = service.get('name', '').split('/')[-1] or service.get('serviceId', '')
+            for target in service_names:
+                if target in display_name:
+                    found[target] = service_id
+                    logger.info(f"Found service: {display_name} (ID: {service_id})")
+        missing = set(service_names) - set(found.keys())
+        if missing:
+            logger.warning(f"Services not found: {missing}")
+        return found
+
+    def get_skus(self, service_id: str, currency_code: str = "USD", page_size: int = 1000, region_filter: Optional[str] = None) -> List[Dict]:
+        logger.info(f"Fetching SKUs for service {service_id} via REST (region filter: {region_filter})")
+        skus: List[Dict] = []
+        filtered: List[Dict] = []
+        next_page_token: Optional[str] = None
+        
+        while True:
+            params: Dict[str, object] = {
+                "currencyCode": currency_code,
+                "pageSize": page_size,
+            }
+            if next_page_token:
+                params["pageToken"] = next_page_token
+            url = f"{API_BASE_URL}/services/{service_id}/skus"
+            data = self._retry_request("GET", url, params=params)
+            batch = data.get("skus", [])
+            skus.extend(batch)
+            for sku in batch:
+                geo_taxonomy = sku.get('geoTaxonomy', {})
+                geo_type = geo_taxonomy.get('type', '')
+                regions = geo_taxonomy.get('regions', [])
+                if geo_type == 'GLOBAL' or (region_filter and region_filter in regions):
+                    filtered.append(sku)
+            logger.info(f"Retrieved {len(batch)} SKUs, {len(filtered)} after region filtering (total: {len(skus)} fetched, {len(filtered)} filtered)")
+            next_page_token = data.get("nextPageToken")
+            if not next_page_token:
+                break
+            time.sleep(0.1)
+        logger.info(f"Successfully retrieved {len(skus)} total SKUs, {len(filtered)} after region filtering")
+        return filtered
 
 
 def load_service_plans(file_path: str) -> List[Dict]:
@@ -467,18 +606,15 @@ def main():
     region = args.region
     logger.info(f"Configured region: {region}")
     
-    # Check for required dependencies
-    if not GCP_API_AVAILABLE:
-        logger.error("Google Cloud API libraries are not available. Please install: pip install google-auth google-api-python-client")
-        sys.exit(1)
+    # Google Cloud API libraries missing will trigger REST fallback via gcloud if available
     
     if not os.path.exists(SERVICE_PLANS_FILE):
         logger.error(f"Service plans file not found: {SERVICE_PLANS_FILE}")
         sys.exit(1)
     
-    if not GOOGLE_APPLICATION_CREDENTIALS:
+    if GCP_API_AVAILABLE and not GOOGLE_APPLICATION_CREDENTIALS:
         logger.error("GOOGLE_APPLICATION_CREDENTIALS environment variable not set")
-        logger.error("Please set the path to your Google Cloud service account JSON file")
+        logger.error("Please set the path to your Google Cloud service account JSON file or rely on gcloud fallback by installing the CLI and running 'gcloud auth activate-service-account'")
         sys.exit(1)
     
     try:
@@ -508,7 +644,18 @@ def main():
         
         # Step 4: Initialize GCP Billing client
         logger.info("Step 4: Initializing GCP Billing API client")
-        gcp_client = GCPBillingClient(GOOGLE_APPLICATION_CREDENTIALS)
+        if GCP_API_AVAILABLE:
+            gcp_client = GCPBillingClient(GOOGLE_APPLICATION_CREDENTIALS)
+        else:
+            if not REQUESTS_AVAILABLE:
+                logger.error("requests library not available for REST fallback. Please install: pip install requests")
+                sys.exit(1)
+            logger.info("Falling back to REST client using gcloud access token")
+            access_token = obtain_access_token_from_gcloud()
+            if not access_token:
+                logger.error("gcloud access token unavailable. Install Google Cloud SDK and run 'gcloud auth activate-service-account' or install google-auth libraries.")
+                sys.exit(1)
+            gcp_client = GCPBillingRestClient(access_token)
         
         # Step 5: Get services and find relevant service IDs
         logger.info("Step 5: Finding relevant GCP services")
