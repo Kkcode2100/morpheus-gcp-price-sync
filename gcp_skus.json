@@ -1,592 +1,59 @@
 {
-  "metadata": {
-    "timestamp": "2025-08-08 16:29:55 UTC",
-    "region": "asia-southeast2",
-    "compute_engine_service_id": "sample-6F81-5844-456A",
-    "total_service_plans": 466,
-    "google_service_plans": 466,
-    "total_skus_fetched": 90,
-    "relevant_skus_found": 9,
-    "instance_types_discovered": [
-      "c2d-standard-56",
-      "c4-highcpu-4",
-      "c4a-highcpu-4",
-      "c4d-highcpu",
-      "c4d-highmem-8",
-      "g2-standard-24",
-      "n2d-standard-32",
-      "c4a-highmem-48",
-      "x4",
-      "c4a-highmem-16",
-      "t2d-standard-8",
-      "c3d-highcpu-60",
-      "c4d-highcpu-8",
-      "c2",
-      "n1-highmem-64",
-      "n2-highmem-96",
-      "n2d-highmem-2",
-      "c4a-standard-64",
-      "z3-highmem-192",
-      "g1",
-      "m2",
-      "a3-edgegpu",
-      "l4",
-      "n1-megamem",
-      "n2d-highmem-32",
-      "n2-highcpu-16",
-      "m4-ultramem",
-      "n2-standard-32",
-      "c4a-highcpu-16",
-      "c4a-standard-72",
-      "z3-highmem-8",
-      "c3-standard-192",
-      "a3-ultragpu-8",
-      "c2d-highmem-2",
-      "c3-highmem-22",
-      "a2-highgpu-2",
-      "c3-highmem-176",
-      "h3-standard-88",
-      "n1-highmem-2",
-      "t5l-hightpu-8",
-      "c3d-standard-360",
-      "m1-ultramem-40",
-      "t2a-standard-4",
-      "m1",
-      "c4a-highcpu-48",
-      "c4d-highcpu-96",
-      "c4-standard-192",
-      "t2d-standard-60",
-      "c3-standard-88",
-      "c4d-highmem-16",
-      "a100",
-      "c4-highmem-16",
-      "t2d-standard-16",
-      "n2d-standard",
-      "c2-standard",
-      "t3-hightpu-4",
-      "c2d-standard-4",
-      "n2-highmem-32",
-      "c4d-highcpu-16",
-      "n2-highmem-2",
-      "a3-highgpu-4",
-      "a2-highgpu-4",
-      "h3-standard",
-      "n2-highmem-128",
-      "c2d-highmem",
-      "c4d-highcpu-2",
-      "c2d-highcpu-8",
-      "n1-standard-1",
-      "n2d-standard-2",
-      "g2-standard",
-      "c4d-highmem-96",
-      "c4a-highcpu",
-      "n2d-custom",
-      "m1-megamem-96",
-      "c4d-standard",
-      "c4a-highmem-32",
-      "c4-standard-24",
-      "a3-megagpu",
-      "n1-standard-8",
-      "c4a-highcpu-72",
-      "a3-highgpu",
-      "n4-standard-80",
-      "n2d-standard-8",
-      "n4-highcpu-2",
-      "c4a-standard-8",
-      "c4d-standard-96",
-      "c3-standard-44",
-      "n1-highcpu-64",
-      "c4a-highmem-2",
-      "t5p",
-      "z3-highmem-176",
-      "m2x",
-      "m4-ultramem-224",
-      "c4-highmem-48",
-      "n2-highmem-8",
-      "c4d-highmem-32",
-      "n1-highcpu",
-      "n2d-highcpu-224",
-      "n1-highcpu-8",
-      "t2d-standard-48",
-      "n4-highcpu",
-      "c3-highcpu",
-      "t2d-standard-4",
-      "e2-highmem-16",
-      "n4-highmem-64",
-      "n4-standard-8",
-      "c3-highcpu-44",
-      "c4-highcpu-192",
-      "n2-highcpu-32",
-      "n1-highcpu-16",
-      "m2-ultramem-208",
-      "c4a-highmem-1",
-      "c4-highmem-24",
-      "c3-highmem-4",
-      "c3d-standard-90",
-      "c4d-highmem-4",
-      "t2a-standard-2",
-      "t3p",
-      "c2d-highmem-56",
-      "n2d-highcpu",
-      "n2-standard-80",
-      "c3d-standard-4",
-      "e2-custom",
-      "n4-highmem-80",
-      "n1-ultramem",
-      "e2-highcpu-16",
-      "c4-highcpu-16",
-      "c4-standard-4",
-      "z3",
-      "c3-highcpu-88",
-      "c4a-standard-32",
-      "m4-megamem-28",
-      "n2d-highmem-64",
-      "c4a",
-      "c3-standard-176",
-      "e2-highcpu-32",
-      "c3-highcpu-8",
-      "n2d-highcpu-16",
-      "c4-highcpu-2",
-      "c4-highmem",
-      "c4-highmem-32",
-      "h100",
-      "c4-highmem-96",
-      "n1-megamem-96",
-      "m2-ultramem-416",
-      "n4-highcpu-4",
-      "c4d-highcpu-48",
-      "e2-highmem-4",
-      "h200",
-      "m2-ultramemx",
-      "n4-standard-4",
-      "n2d-highcpu-2",
-      "n2-highmem-4",
-      "a3-highgpu-1",
-      "t5p-hightpu",
-      "n2",
-      "n2-standard-16",
-      "n4",
-      "c4d-standard-384",
-      "m2-ultramemx-96",
-      "c4d-highcpu-384",
-      "c2d-highmem-32",
-      "c4d-highmem-48",
-      "c3d-highmem-30",
-      "t2d-standard-1",
-      "c4a-standard",
-      "n1-highcpu-32",
-      "n2-highcpu-2",
-      "a2-ultragpu",
-      "m2-ultramem",
-      "c2-standard-30",
-      "c4d-highcpu-4",
-      "n4-highmem-48",
-      "m3-ultramem-32",
-      "c3",
-      "t5p-hightpu-4",
-      "t6e-standard-1",
-      "c2d-highcpu-32",
-      "m2-hypermem-416",
-      "e2-standard-8",
-      "n4-standard-64",
-      "g2",
-      "n4-standard-48",
-      "n4-highmem-32",
-      "x4-megamem-1920",
-      "m4",
-      "v6",
-      "c4a-highmem-64",
-      "h3",
-      "c3-highmem-44",
-      "n2-highmem-48",
-      "f1",
-      "c4a-highmem-4",
-      "a4-highgpu",
-      "c4-highcpu-48",
-      "c4a-highcpu-32",
-      "c4-standard-96",
-      "c4-highmem-288",
-      "n2d-standard-64",
-      "t6e-standard-4",
-      "c3d-highcpu-16",
-      "f1-micro",
-      "x4-megamem-960",
-      "t3-hightpu",
-      "c4d-standard-8",
-      "n1-ultramem-40",
-      "c4d-highmem-384",
-      "c3d-standard-60",
-      "n1-highmem-16",
-      "t2d-standard-2",
-      "n4-highcpu-32",
-      "n1-custom",
-      "c2d-highcpu-112",
-      "m2-megamem-416",
-      "n2-highcpu-96",
-      "n4-highcpu-64",
-      "c4d",
-      "c2d-standard-8",
-      "c4d-standard-64",
-      "c2d-standard-32",
-      "n2-highmem-80",
-      "c4d-highmem-2",
-      "n2d-highcpu-4",
-      "c3-standard-4",
-      "c3d-highcpu-180",
-      "n1-ultramem-80",
-      "c2d-highmem-4",
-      "c4a-highmem-8",
-      "a3-highgpu-8",
-      "n4-standard-32",
-      "t2d-standard",
-      "c3d-highcpu",
-      "c2d-highmem-16",
-      "c4d-highmem",
-      "n1-highmem-8",
-      "c4a-standard-2",
-      "e2-standard-16",
-      "c3d-highmem-60",
-      "c3d-standard-16",
-      "c3d-highmem-90",
-      "c3-highmem-8",
-      "a2-ultragpu-4",
-      "c4d-highcpu-192",
-      "t6e-standard",
-      "c2d-highcpu-4",
-      "a2-ultragpu-2",
-      "c4-standard-16",
-      "c2d-standard",
-      "e2-highcpu",
-      "c4-highmem-4",
-      "c4a-standard-16",
-      "c4a-highmem",
-      "c4d-highcpu-64",
-      "t2a-standard-48",
-      "n2d-standard-16",
-      "c4d-standard-4",
-      "n4-highcpu-8",
-      "c3-highcpu-192",
-      "m4-ultramem-112",
-      "n2d-highcpu-128",
-      "a3-ultragpu",
-      "n2-highcpu-8",
-      "e2-highmem-2",
-      "e2-small",
-      "c2d-standard-112",
-      "t2a-standard",
-      "a3",
-      "c4-highmem-8",
-      "c4a-highcpu-64",
-      "c3-standard-22",
-      "n2-standard-4",
-      "c4-highcpu",
-      "c3d-highmem-4",
-      "z3-highmem-22",
-      "n1-highmem-32",
-      "n1-standard-4",
-      "c2-standard-16",
-      "t2a",
-      "e2-highmem",
-      "c4d-standard-2",
-      "n2d-highcpu-64",
-      "c4a-highcpu-2",
-      "n4-highmem-16",
-      "t5l",
-      "a3-megagpu-8",
-      "n2d-highcpu-8",
-      "e2-standard-2",
-      "n2d-standard-4",
-      "c3d-highcpu-4",
-      "c4d-standard-48",
-      "c4-highcpu-288",
-      "n2d-highcpu-80",
-      "m3-ultramem-128",
-      "n2d-highmem-8",
-      "n1-standard-96",
-      "t2a-standard-32",
-      "n4-highcpu-48",
-      "c4-standard-288",
-      "n4-highcpu-80",
-      "n4-standard-16",
-      "a4-highgpu-8",
-      "a4",
-      "c3d",
-      "n4-standard",
-      "m4-megamem-224",
-      "c4-highmem-144",
-      "c2-standard-4",
-      "a2-highgpu-8",
-      "n2d-highcpu-48",
-      "z3-highmem-88",
-      "a2-highgpu",
-      "n2d-standard-128",
-      "n2d",
-      "n2d-highmem-16",
-      "m1-megamem",
-      "z3-highmem",
-      "a2-megagpu-16",
-      "c4-standard-32",
-      "c4-standard-48",
-      "n2-highcpu-64",
-      "c4a-highcpu-8",
-      "c4a-standard-48",
-      "m3",
-      "n2-custom",
-      "g2-standard-16",
-      "t5l-hightpu",
-      "e2-micro",
-      "c2d-highcpu-2",
-      "z3-highmem-32",
-      "c4a-standard-1",
-      "m3-megamem",
-      "n2d-standard-224",
-      "m3-megamem-128",
-      "n1-highmem",
-      "c4-highcpu-24",
-      "n2d-highcpu-96",
-      "n2d-highmem-80",
-      "x4-megamem-1440",
-      "c4a-highcpu-1",
-      "g2-standard-12",
-      "c3d-highmem-8",
-      "c2-standard-60",
-      "c3d-highcpu-90",
-      "n1-highmem-96",
-      "a3-edgegpu-8",
-      "n2d-standard-48",
-      "c2d-standard-2",
-      "m3-ultramem",
-      "c4-standard-144",
-      "c2d-highmem-8",
-      "g2-standard-8",
-      "c3d-highmem-180",
-      "n1",
-      "c4a-standard-4",
-      "n1-highcpu-2",
-      "m4-ultramem-56",
-      "c4-standard",
-      "n1-highcpu-4",
-      "n2-standard-2",
-      "c3-highcpu-22",
-      "g1-small",
-      "c3-highmem-88",
-      "c3d-highcpu-30",
-      "t3p-hightpu",
-      "m2-megamem",
-      "x4-megamem",
-      "g2-standard-4",
-      "c4d-standard-16",
-      "c3d-standard-8",
-      "n2d-highmem-48",
-      "c3d-highcpu-8",
-      "t3p-hightpu-4",
-      "c3d-highcpu-360",
-      "n2-standard-64",
-      "c4-highcpu-8",
-      "c3d-highmem",
-      "n2d-highcpu-32",
-      "n2-highcpu-80",
-      "a2-highgpu-1",
-      "c3-standard",
-      "c4a-highmem-72",
-      "t6e",
-      "c2d",
-      "c4d-highmem-64",
-      "g2-standard-96",
-      "c3-standard-8",
-      "c2d-highcpu-56",
-      "c3-highcpu-4",
-      "c4d-highmem-192",
-      "g2-standard-48",
-      "z3-highmem-16",
-      "c4",
-      "t5l-hightpu-4",
-      "n2-highmem-64",
-      "c4d-standard-32",
-      "c4-standard-2",
-      "n2-standard-128",
-      "m4-megamem-112",
-      "n2-highmem-16",
-      "c2d-highcpu-16",
-      "b200",
-      "c2d-standard-16",
-      "e2",
-      "m1-ultramem-80",
-      "n2-standard-8",
-      "e2-highcpu-2",
-      "m3-megamem-64",
-      "e2-highcpu-8",
-      "a2-megagpu",
-      "e2-standard",
-      "e2-standard-32",
-      "e2-highmem-8",
-      "c3-highmem",
-      "m2-hypermem",
-      "n1-standard-32",
-      "e2-medium",
-      "z3-highmem-44",
-      "n1-highmem-4",
-      "n4-highmem-8",
-      "c2d-highmem-112",
-      "c3d-standard-180",
-      "a3-highgpu-2",
-      "z3-highmem-14",
-      "e2-standard-4",
-      "t2d",
-      "t5l-hightpu-1",
-      "c3d-highmem-16",
-      "c3d-highmem-360",
-      "a2",
-      "a2-ultragpu-1",
-      "n4-standard-2",
-      "m3-ultramem-64",
-      "m4-megamem",
-      "n1-standard",
-      "a2-ultragpu-8",
-      "c3-highmem-192",
-      "n2-standard-48",
-      "c4-highmem-2",
-      "c4d-standard-192",
-      "c2d-highcpu",
-      "n4-highcpu-16",
-      "m4-megamem-56",
-      "n2-highcpu",
-      "n2-standard-96",
-      "m1-ultramem-160",
-      "c3d-standard-30",
-      "c4-highmem-192",
-      "c4-highcpu-96",
-      "n1-highcpu-96",
-      "e2-highcpu-4",
-      "c3d-standard",
-      "n1-standard-64",
-      "n2d-highmem-96",
-      "c4-standard-8",
-      "n4-highmem",
-      "t2d-standard-32",
-      "c3-highcpu-176",
-      "n2-standard",
-      "t2a-standard-1",
-      "t3",
-      "n2-highmem",
-      "n2-highcpu-48",
-      "g2-standard-32",
-      "c4-highcpu-32",
-      "n2d-standard-96",
-      "c4-highcpu-144",
-      "n4-highmem-4",
-      "n2d-highmem",
-      "n2-highcpu-4",
-      "c2-standard-8",
-      "n4-highmem-2",
-      "c4d-highcpu-32",
-      "n1-standard-16",
-      "t2a-standard-16",
-      "n2d-standard-80",
-      "n1-ultramem-160",
-      "n1-standard-2",
-      "n2d-highmem-4",
-      "t2a-standard-8",
-      "t6e-standard-8",
-      "m1-ultramem"
-    ],
-    "instance_families_discovered": [
-      "a2",
-      "a4",
-      "c3d",
-      "h200",
-      "c4",
-      "t2a",
-      "g2",
-      "m1",
-      "x4",
-      "n2",
-      "n4",
-      "m4",
-      "t3p",
-      "n2d",
-      "v6",
-      "a100",
-      "b200",
-      "t5p",
-      "m2x",
-      "h3",
-      "e2",
-      "c2",
-      "t5l",
-      "t6e",
-      "c2d",
-      "f1",
-      "n1",
-      "z3",
-      "g1",
-      "m3",
-      "c4d",
-      "c4a",
-      "m2",
-      "l4",
-      "a3",
-      "h100",
-      "c3",
-      "t2d",
-      "t3"
-    ],
-    "note": "This is sample data created for demonstration. Real data would come from GCP Billing API."
-  },
   "skus": [
     {
-      "skuId": "sample-a2-vcpu-8536",
-      "name": "services/6F81-5844-456A/skus/sample-a2-vcpu",
-      "description": "A2 vCPU for a2 instances",
+      "name": "services/CCD8-9BF1-090E/skus/05C1-AF31-E5F4",
+      "skuId": "05C1-AF31-E5F4",
+      "description": "Autopilot Balanced Spot Pod Memory Requests (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
+        "serviceDisplayName": "Kubernetes Engine",
         "resourceFamily": "Compute",
-        "resourceGroup": "vCPU",
-        "usageType": "OnDemand"
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
       },
       "serviceRegions": [
         "asia-southeast2"
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand vCPU for a2 instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
+            "usageUnit": "GiBy.h",
             "displayQuantity": 1,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
-                  "nanos": 300000000
+                  "nanos": 2878500
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     },
     {
-      "skuId": "sample-a2-memory-2417",
-      "name": "services/6F81-5844-456A/skus/sample-a2-memory",
-      "description": "A2 Memory for a2 instances",
+      "name": "services/CCD8-9BF1-090E/skus/0CB0-FD44-34AF",
+      "skuId": "0CB0-FD44-34AF",
+      "description": "Autopilot Pod mCPU Requests (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
+        "serviceDisplayName": "Kubernetes Engine",
         "resourceFamily": "Compute",
-        "resourceGroup": "Memory",
+        "resourceGroup": "Kubernetes",
         "usageType": "OnDemand"
       },
       "serviceRegions": [
@@ -594,44 +61,45 @@
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand Memory for a2 instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
-            "displayQuantity": 1,
+            "usageUnit": "h",
+            "displayQuantity": 1000,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
-                  "nanos": 300000000
+                  "nanos": 59800
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     },
     {
-      "skuId": "sample-a2-storage-7011",
-      "name": "services/6F81-5844-456A/skus/sample-a2-storage",
-      "description": "A2 Storage for a2 instances",
+      "name": "services/CCD8-9BF1-090E/skus/0E5C-D3D9-1852",
+      "skuId": "0E5C-D3D9-1852",
+      "description": "Autopilot SSD Pod Ephemeral Storage Requests (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
-        "resourceFamily": "Storage",
-        "resourceGroup": "Storage",
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
         "usageType": "OnDemand"
       },
       "serviceRegions": [
@@ -639,44 +107,91 @@
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand Storage for a2 instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
+            "usageUnit": "GiBy.h",
             "displayQuantity": 1,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
-                  "nanos": 300000000
+                  "nanos": 186800
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     },
     {
-      "skuId": "sample-a4-vcpu-7219",
-      "name": "services/6F81-5844-456A/skus/sample-a4-vcpu",
-      "description": "A4 vCPU for a4 instances",
+      "name": "services/CCD8-9BF1-090E/skus/11B6-11FE-F90B",
+      "skuId": "11B6-11FE-F90B",
+      "description": "Autopilot Performance Spot CPU Premium (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
+        "serviceDisplayName": "Kubernetes Engine",
         "resourceFamily": "Compute",
-        "resourceGroup": "vCPU",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 1613
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/16D5-3382-03B5",
+      "skuId": "16D5-3382-03B5",
+      "description": "Autopilot Pod Ephemeral Storage Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
         "usageType": "OnDemand"
       },
       "serviceRegions": [
@@ -684,179 +199,823 @@
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand vCPU for a4 instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
+            "usageUnit": "GiBy.h",
             "displayQuantity": 1,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 73700
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/1953-1A54-5EB3",
+      "skuId": "1953-1A54-5EB3",
+      "description": "Autopilot Balanced Pod Memory Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 9595000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/2572-F0E7-966C",
+      "skuId": "2572-F0E7-966C",
+      "description": "Autopilot Performance CPU Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 5378
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/3630-EF1B-2849",
+      "skuId": "3630-EF1B-2849",
+      "description": "Kubernetes Engine Committed Use Discounts - asia-southeast2 - 3 Year",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Commit3Yr"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "1",
+                  "nanos": 0
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/3817-56BC-C0A9",
+      "skuId": "3817-56BC-C0A9",
+      "description": "Autopilot Accelerator Spot Memory Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 175000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/3B4C-25A0-CEBC",
+      "skuId": "3B4C-25A0-CEBC",
+      "description": "Autopilot Local SSD Spot Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.mo",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 9413000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte month",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 2875910101401600.0
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/3CF0-9A4A-F905",
+      "skuId": "3CF0-9A4A-F905",
+      "description": "Autopilot Accelerator CPU Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 4034
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/4C42-AAD5-7847",
+      "skuId": "4C42-AAD5-7847",
+      "description": "Autopilot Accelerator Spot CPU Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 1479
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/4EF9-AB7B-6428",
+      "skuId": "4EF9-AB7B-6428",
+      "description": "Autopilot Spot Pod mCPU Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 18000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/5757-497E-E4B3",
+      "skuId": "5757-497E-E4B3",
+      "description": "Autopilot Balanced Spot Pod mCPU Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 26000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/5C5A-9185-7772",
+      "skuId": "5C5A-9185-7772",
+      "description": "Autopilot Spot Pod Memory Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 1985800
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/5EB6-6DF0-9F5C",
+      "skuId": "5EB6-6DF0-9F5C",
+      "description": "Autopilot Performance Spot Memory Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 202000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/6734-B635-4444",
+      "skuId": "6734-B635-4444",
+      "description": "Autopilot Performance Memory Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 672000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/69BD-4ED5-A9D4",
+      "skuId": "69BD-4ED5-A9D4",
+      "description": "Commitment - dollar based v1: Kubernetes Engine Autopilot asia-southeast2 for 1 year",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Commit1Yr"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 8000000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/6B92-A835-08AB",
+      "skuId": "6B92-A835-08AB",
+      "description": "Zonal Kubernetes Clusters",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 100000000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/6E15-CD04-4DC0",
+      "skuId": "6E15-CD04-4DC0",
+      "description": "Extended Period Kubernetes Clusters",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
                   "nanos": 500000000
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
     },
     {
-      "skuId": "sample-a4-memory-0606",
-      "name": "services/6F81-5844-456A/skus/sample-a4-memory",
-      "description": "A4 Memory for a4 instances",
+      "name": "services/CCD8-9BF1-090E/skus/8572-D615-AD9D",
+      "skuId": "8572-D615-AD9D",
+      "description": "Kubernetes Engine Committed Use Discounts - asia-southeast2 - 1 Year",
       "category": {
-        "serviceDisplayName": "Compute Engine",
+        "serviceDisplayName": "Kubernetes Engine",
         "resourceFamily": "Compute",
-        "resourceGroup": "Memory",
-        "usageType": "OnDemand"
+        "resourceGroup": "Kubernetes",
+        "usageType": "Commit1Yr"
       },
       "serviceRegions": [
         "asia-southeast2"
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand Memory for a4 instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
+            "usageUnit": "h",
             "displayQuantity": 1,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
-                  "units": "0",
-                  "nanos": 500000000
+                  "units": "1",
+                  "nanos": 0
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
-          },
-          "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
-        }
-      ],
-      "serviceProviderName": "Google"
-    },
-    {
-      "skuId": "sample-a4-storage-0436",
-      "name": "services/6F81-5844-456A/skus/sample-a4-storage",
-      "description": "A4 Storage for a4 instances",
-      "category": {
-        "serviceDisplayName": "Compute Engine",
-        "resourceFamily": "Storage",
-        "resourceGroup": "Storage",
-        "usageType": "OnDemand"
-      },
-      "serviceRegions": [
-        "asia-southeast2"
-      ],
-      "pricingInfo": [
-        {
-          "summary": "OnDemand Storage for a4 instances",
-          "pricingExpression": {
-            "usageUnit": "hour",
+            ],
             "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
-            "displayQuantity": 1,
-            "tieredRates": [
-              {
-                "startUsageAmount": "0",
-                "unitPrice": {
-                  "currencyCode": "USD",
-                  "units": "0",
-                  "nanos": 500000000
-                }
-              }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     },
     {
-      "skuId": "sample-c3d-vcpu-8211",
-      "name": "services/6F81-5844-456A/skus/sample-c3d-vcpu",
-      "description": "C3D vCPU for c3d instances",
+      "name": "services/CCD8-9BF1-090E/skus/9115-85B4-0CDF",
+      "skuId": "9115-85B4-0CDF",
+      "description": "Autopilot T4 Spot Premium (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
+        "serviceDisplayName": "Kubernetes Engine",
         "resourceFamily": "Compute",
-        "resourceGroup": "vCPU",
-        "usageType": "OnDemand"
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
       },
       "serviceRegions": [
         "asia-southeast2"
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand vCPU for c3d instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
-            "displayQuantity": 1,
+            "usageUnit": "h",
+            "displayQuantity": 1000,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
-                  "nanos": 50000000
+                  "nanos": 22859
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     },
     {
-      "skuId": "sample-c3d-memory-8280",
-      "name": "services/6F81-5844-456A/skus/sample-c3d-memory",
-      "description": "C3D Memory for c3d instances",
+      "name": "services/CCD8-9BF1-090E/skus/A0BC-713E-9497",
+      "skuId": "A0BC-713E-9497",
+      "description": "Autopilot T4 Premium (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
+        "serviceDisplayName": "Kubernetes Engine",
         "resourceFamily": "Compute",
-        "resourceGroup": "Memory",
+        "resourceGroup": "Kubernetes",
         "usageType": "OnDemand"
       },
       "serviceRegions": [
@@ -864,44 +1023,45 @@
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand Memory for c3d instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
-            "displayQuantity": 1,
+            "usageUnit": "h",
+            "displayQuantity": 1000,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
-                  "nanos": 50000000
+                  "nanos": 56477
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     },
     {
-      "skuId": "sample-c3d-storage-2349",
-      "name": "services/6F81-5844-456A/skus/sample-c3d-storage",
-      "description": "C3D Storage for c3d instances",
+      "name": "services/CCD8-9BF1-090E/skus/A9A4-A18E-783C",
+      "skuId": "A9A4-A18E-783C",
+      "description": "Autopilot Scale-Out x86 Pod Memory Requests (asia-southeast2)",
       "category": {
-        "serviceDisplayName": "Compute Engine",
-        "resourceFamily": "Storage",
-        "resourceGroup": "Storage",
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
         "usageType": "OnDemand"
       },
       "serviceRegions": [
@@ -909,35 +1069,1086 @@
       ],
       "pricingInfo": [
         {
-          "summary": "OnDemand Storage for c3d instances",
+          "summary": "",
           "pricingExpression": {
-            "usageUnit": "hour",
-            "usageUnitDescription": "hour",
-            "baseUnit": "hour",
-            "baseUnitDescription": "hour",
-            "baseUnitConversionFactor": 1,
+            "usageUnit": "GiBy.h",
             "displayQuantity": 1,
             "tieredRates": [
               {
-                "startUsageAmount": "0",
+                "startUsageAmount": 0,
                 "unitPrice": {
                   "currencyCode": "USD",
                   "units": "0",
-                  "nanos": 50000000
+                  "nanos": 8340300
                 }
               }
-            ]
-          },
-          "aggregationInfo": {
-            "aggregationLevel": "ACCOUNT",
-            "aggregationInterval": "DAILY",
-            "aggregationCount": 1
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
           },
           "currencyConversionRate": 1,
-          "effectiveTime": "2025-01-01T00:00:00Z"
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
         }
       ],
-      "serviceProviderName": "Google"
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/AB2C-4C01-B3AE",
+      "skuId": "AB2C-4C01-B3AE",
+      "description": "Commitment - dollar based v1: Kubernetes Engine Autopilot asia-southeast2 for 3 years",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Commit3Yr"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 5500000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/B561-BFBD-1264",
+      "skuId": "B561-BFBD-1264",
+      "description": "Regional Kubernetes Clusters",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 100000000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/BC38-B6DE-1EC1",
+      "skuId": "BC38-B6DE-1EC1",
+      "description": "Autopilot Local SSD Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.mo",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 12102000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte month",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 2875910101401600.0
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/C12E-1F7A-CCAC",
+      "skuId": "C12E-1F7A-CCAC",
+      "description": "Autopilot Pod Memory Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 6619300
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/CC9D-B9D1-C020",
+      "skuId": "CC9D-B9D1-C020",
+      "description": "Autopilot Balanced Pod mCPU Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 86700
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/D03E-716D-8010",
+      "skuId": "D03E-716D-8010",
+      "description": "Autopilot Scale-Out x86 Spot Pod Memory Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 2502100
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/D6AF-5E7B-F9E5",
+      "skuId": "D6AF-5E7B-F9E5",
+      "description": "Autopilot Scale-Out x86 Pod mCPU Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 75400
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/E1C3-D5F6-1F48",
+      "skuId": "E1C3-D5F6-1F48",
+      "description": "Autopilot PD Balanced Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.mo",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 16136000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte month",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 2875910101401600.0
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/F52D-A61F-C7D1",
+      "skuId": "F52D-A61F-C7D1",
+      "description": "Autopilot Kubernetes Clusters",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 100000000
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/F96D-D24A-63BB",
+      "skuId": "F96D-D24A-63BB",
+      "description": "Autopilot Accelerator Memory Premium (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "GiBy.h",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 471000
+                }
+              }
+            ],
+            "usageUnitDescription": "gibibyte hour",
+            "baseUnit": "By.s",
+            "baseUnitDescription": "byte second",
+            "baseUnitConversionFactor": 3865470566400
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
+    },
+    {
+      "name": "services/CCD8-9BF1-090E/skus/FDF3-1B2D-A39B",
+      "skuId": "FDF3-1B2D-A39B",
+      "description": "Autopilot Scale-Out x86 Spot Pod mCPU Requests (asia-southeast2)",
+      "category": {
+        "serviceDisplayName": "Kubernetes Engine",
+        "resourceFamily": "Compute",
+        "resourceGroup": "Kubernetes",
+        "usageType": "Preemptible"
+      },
+      "serviceRegions": [
+        "asia-southeast2"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 22600
+                }
+              }
+            ],
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2025-08-08T16:53:11.488321Z"
+        }
+      ],
+      "serviceProviderName": "Google",
+      "geoTaxonomy": {
+        "type": "REGIONAL",
+        "regions": [
+          "asia-southeast2"
+        ]
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "timestamp": "2025-08-08 16:53:17 UTC",
+    "region": "asia-southeast2",
+    "services_found": {
+      "Compute Engine": "9866-D980-657B",
+      "Kubernetes Engine": "CCD8-9BF1-090E"
+    },
+    "total_service_plans": 688,
+    "google_service_plans": 466,
+    "classified_plans": {
+      "machine": 465,
+      "storage": 1,
+      "kubernetes": 0
+    },
+    "total_skus_fetched": 36,
+    "skus_fetched_per_service": {
+      "Compute Engine": 1,
+      "Kubernetes Engine": 35
+    },
+    "relevant_skus_found": 35,
+    "skus_by_service_type": {
+      "compute_engine": 0,
+      "persistent_disk": 0,
+      "kubernetes_engine": 35,
+      "other": 0
+    },
+    "sku_patterns_used": {
+      "compute_engine": [
+        "g1",
+        "c4d",
+        "t2a",
+        "z3",
+        "m3",
+        "a4",
+        "e2",
+        "v6",
+        "n4",
+        "m2x",
+        "c2d",
+        "n1",
+        "x4",
+        "t3p",
+        "a3",
+        "a2",
+        "m1",
+        "m4",
+        "n2",
+        "f1",
+        "t6e",
+        "b200",
+        "m2",
+        "h200",
+        "c4",
+        "a100",
+        "n2d",
+        "h100",
+        "c3d",
+        "c4a",
+        "t5p",
+        "g2",
+        "l4",
+        "t3",
+        "t2d",
+        "t5l",
+        "c2",
+        "h3",
+        "c3"
+      ],
+      "persistent_disk": [
+        "pd-standard",
+        "pd-ssd",
+        "pd-extreme",
+        "pd-balanced"
+      ],
+      "kubernetes_engine": [
+        "gke",
+        "autopilot"
+      ]
+    },
+    "plans_without_matching_skus": [
+      "f1-micro - 1 vCPU (shared physical core) and 0.6 GB RAM",
+      "g1-small - 1 vCPU (shared physical core) and 1.7 GB RAM",
+      "n1-standard-1 - 1 vCPU, 3.75 GB RAM",
+      "n1-standard-2 - 2 vCPUs, 7.5 GB RAM",
+      "n1-standard-4 - 4 vCPUs, 15 GB RAM",
+      "n1-standard-8 - 8 vCPUs, 30 GB RAM",
+      "n1-standard-16 - 16 vCPUs, 60 GB RAM",
+      "n1-standard-32 - 32 vCPUs, 120 GB RAM",
+      "n1-standard-64 - 64 vCPUs, 240 GB RAM",
+      "n1-standard-96 - 96 vCPUs, 360 GB RAM",
+      "n1-highmem-2 - 2 vCPUs, 13 GB RAM",
+      "n1-highmem-4 - 4 vCPUs, 26 GB RAM",
+      "n1-highmem-8 - 8 vCPUs, 52 GB RAM",
+      "n1-highmem-16 - 16 vCPUs, 104 GB RAM",
+      "n1-highmem-32 - 32 vCPUs, 208 GB RAM",
+      "n1-highmem-64 - 64 vCPUs, 416 GB RAM",
+      "n1-highmem-96 - 96 vCPUs, 624 GB RAM",
+      "n1-highcpu-2 - 2 vCPUs, 1.8 GB RAM",
+      "n1-highcpu-4 - 4 vCPUs, 3.6 GB RAM",
+      "n1-highcpu-8 - 8 vCPUs, 7.2 GB RAM",
+      "n1-highcpu-16 - 16 vCPUs, 14.4 GB RAM",
+      "n1-highcpu-32 - 32 vCPUs, 28.8 GB RAM",
+      "n1-highcpu-64 - 64 vCPUs, 57.6 GB RAM",
+      "n1-highcpu-96 - 96 vCPUs, 86 GB RAM",
+      "n1-custom",
+      "e2-micro - Efficient Instance, 2 vCPU (1/8 shared physical core) and 1 GB RAM",
+      "e2-custom-micro",
+      "e2-small - Efficient Instance, 2 vCPU (1/4 shared physical core) and 2 GB RAM",
+      "e2-custom-small",
+      "e2-medium - Efficient Instance, 2 vCPU (1/2 shared physical core) and 4 GB RAM",
+      "e2-custom-medium",
+      "e2-standard-2 - Efficient Instance, 2 vCPUs, 8 GB RAM",
+      "e2-standard-4 - Efficient Instance, 4 vCPUs, 16 GB RAM",
+      "e2-standard-8 - Efficient Instance, 8 vCPUs, 32 GB RAM",
+      "e2-standard-16 - Efficient Instance, 16 vCPUs, 64 GB RAM",
+      "e2-standard-32 - Efficient Instance, 32 vCPUs, 128 GB RAM",
+      "e2-custom",
+      "e2-highmem-2 - Efficient Instance, 2 vCPUs, 16 GB RAM",
+      "e2-highmem-4 - Efficient Instance, 4 vCPUs, 32 GB RAM",
+      "e2-highmem-8 - Efficient Instance, 8 vCPUs, 64 GB RAM",
+      "e2-highmem-16 - Efficient Instance, 16 vCPUs, 128 GB RAM",
+      "e2-highcpu-2 - Efficient Instance, 2 vCPUs, 2 GB RAM",
+      "e2-highcpu-4 - Efficient Instance, 4 vCPUs, 4 GB RAM",
+      "e2-highcpu-8 - Efficient Instance, 8 vCPUs, 8 GB RAM",
+      "e2-highcpu-16 - Efficient Instance, 16 vCPUs, 16 GB RAM",
+      "e2-highcpu-32 - Efficient Instance, 32 vCPUs, 32 GB RAM",
+      "n2-standard-2 - 2 vCPUs 8 GB RAM",
+      "n2-standard-4 - 4 vCPUs 16 GB RAM",
+      "n2-standard-8 - 8 vCPUs 32 GB RAM",
+      "n2-standard-16 - 16 vCPUs 64 GB RAM",
+      "n2-standard-32 - 32 vCPUs 128 GB RAM",
+      "n2-standard-48 - 48 vCPUs 192 GB RAM",
+      "n2-standard-64 - 64 vCPUs 256 GB RAM",
+      "n2-standard-80 - 80 vCPUs 320 GB RAM",
+      "n2-standard-96 - 96 vCPUs 384 GB RAM",
+      "n2-standard-128 - 128 vCPUs 512 GB RAM",
+      "n2-highmem-2 - 2 vCPUs 16 GB RAM",
+      "n2-highmem-4 - 4 vCPUs 32 GB RAM",
+      "n2-highmem-8 - 8 vCPUs 64 GB RAM",
+      "n2-highmem-16 - 16 vCPUs 128 GB RAM",
+      "n2-highmem-32 - 32 vCPUs 256 GB RAM",
+      "n2-highmem-48 - 48 vCPUs 384 GB RAM",
+      "n2-highmem-64 - 64 vCPUs 512 GB RAM",
+      "n2-highmem-80 - 80 vCPUs 640 GB RAM",
+      "n2-highmem-96 - 96 vCPUs 768 GB RAM",
+      "n2-highmem-128 - 128 vCPUs 864 GB RAM",
+      "n2-highcpu-2 - 2 vCPUs 2 GB RAM",
+      "n2-highcpu-4 - 4 vCPUs 4 GB RAM",
+      "n2-highcpu-8 - 8 vCPUs 8 GB RAM",
+      "n2-highcpu-16 - 16 vCPUs 16 GB RAM",
+      "n2-highcpu-32 - 32 vCPUs 32 GB RAM",
+      "n2-highcpu-48 - 48 vCPUs 48 GB RAM",
+      "n2-highcpu-64 - 64 vCPUs 64 GB RAM",
+      "n2-highcpu-80 - 80 vCPUs 80 GB RAM",
+      "n2-highcpu-96 - 96 vCPUs 96 GB RAM",
+      "n2-custom",
+      "n2d-standard-2 - 2 vCPUs 8 GB RAM",
+      "n2d-standard-4 - 4 vCPUs 16 GB RAM",
+      "n2d-standard-8 - 8 vCPUs 32 GB RAM",
+      "n2d-standard-16 - 16 vCPUs 64 GB RAM",
+      "n2d-standard-32 - 32 vCPUs 128 GB RAM",
+      "n2d-standard-48 - 48 vCPUs 192 GB RAM",
+      "n2d-standard-64 - 64 vCPUs 256 GB RAM",
+      "n2d-standard-80 - 80 vCPUs 320 GB RAM",
+      "n2d-standard-96 - 96 vCPUs 384 GB RAM",
+      "n2d-standard-128 - 128 vCPUs 512 GB RAM",
+      "n2d-standard-224 - 224 vCPUs 896 GB RAM",
+      "n2d-highmem-2 - 2 vCPUs 16 GB RAM",
+      "n2d-highmem-4 - 4 vCPUs 32 GB RAM",
+      "n2d-highmem-8 - 8 vCPUs 64 GB RAM",
+      "n2d-highmem-16 - 16 vCPUs 128 GB RAM",
+      "n2d-highmem-32 - 32 vCPUs 256 GB RAM",
+      "n2d-highmem-48 - 48 vCPUs 384 GB RAM",
+      "n2d-highmem-64 - 64 vCPUs 512 GB RAM",
+      "n2d-highmem-80 - 80 vCPUs 640 GB RAM",
+      "n2d-highmem-96 - 96 vCPUs 768 GB RAM",
+      "n2d-highcpu-2 - 2 vCPUs 2 GB RAM",
+      "n2d-highcpu-4 - 4 vCPUs 4 GB RAM",
+      "n2d-highcpu-8 - 8 vCPUs 8 GB RAM",
+      "n2d-highcpu-16 - 16 vCPUs 16 GB RAM",
+      "n2d-highcpu-32 - 32 vCPUs 32 GB RAM",
+      "n2d-highcpu-48 - 48 vCPUs 48 GB RAM",
+      "n2d-highcpu-64 - 64 vCPUs 64 GB RAM",
+      "n2d-highcpu-80 - 80 vCPUs 80 GB RAM",
+      "n2d-highcpu-96 - 96 vCPUs 96 GB RAM",
+      "n2d-highcpu-128 - 128 vCPUs 128 GB RAM",
+      "n2d-highcpu-224 - 224 vCPUs 224 GB RAM",
+      "n2d-custom",
+      "c2d-highcpu-2 - 2 vCPUs, 4 GB RAM",
+      "c2d-highcpu-4 - 4 vCPUs, 8 GB RAM",
+      "c2d-standard-2 - 2 vCPUs, 8 GB RAM",
+      "c2-standard-4 - Compute Optimized: 4 vCPUs, 16 GB RAM",
+      "c2d-highcpu-8 - 8 vCPUs, 16 GB RAM",
+      "c2d-highmem-2 - 2 vCPUs, 16 GB RAM",
+      "c2d-standard-4 - 4 vCPUs, 16 GB RAM",
+      "c2-standard-8 - Compute Optimized: 8 vCPUs, 32 GB RAM",
+      "c2d-highcpu-16 - 16 vCPUs, 32 GB RAM",
+      "c2d-highmem-4 - 4 vCPUs, 32 GB RAM",
+      "c2d-standard-8 - 8 vCPUs, 32 GB RAM",
+      "c2-standard-16 - Compute Optimized: 16 vCPUs, 64 GB RAM",
+      "c2d-highcpu-32 - 32 vCPUs, 64 GB RAM",
+      "c2d-highmem-8 - 8 vCPUs, 64 GB RAM",
+      "c2d-standard-16 - 16 vCPUs, 64 GB RAM",
+      "c2d-highcpu-56 - 56 vCPUs, 112 GB RAM",
+      "c2-standard-30 - Compute Optimized: 30 vCPUs, 120 GB RAM",
+      "c2d-highmem-16 - 16 vCPUs, 128 GB RAM",
+      "c2d-standard-32 - 32 vCPUs, 128 GB RAM",
+      "c2d-highcpu-112 - 112 vCPUs, 224 GB RAM",
+      "c2d-standard-56 - 56 vCPUs, 224 GB RAM",
+      "c2-standard-60 - Compute Optimized: 60 vCPUs, 240 GB RAM",
+      "c2d-highmem-32 - 32 vCPUs, 256 GB RAM",
+      "c2d-highmem-56 - 56 vCPUs, 448 GB RAM",
+      "c2d-standard-112 - 112 vCPUs, 448 GB RAM",
+      "c2d-highmem-112 - 112 vCPUs, 896 GB RAM",
+      "m1-megamem-96 - 96 vCPUs, 1.4 TB RAM",
+      "m1-ultramem-40 - 40 vCPUs, 961 GB RAM",
+      "m1-ultramem-80 - 80 vCPUs, 1922 GB RAM",
+      "m1-ultramem-160 - 160 vCPUs, 3844 GB RAM",
+      "a2-highgpu-1g - Accelerator Optimized: 1 NVIDIA Tesla A100 GPU, 12 vCPUs, 85GB RAM",
+      "a2-highgpu-2g - Accelerator Optimized: 2 NVIDIA Tesla A100 GPUs, 24 vCPUs, 170GB RAM",
+      "a2-highgpu-4g - Accelerator Optimized: 4 NVIDIA Tesla A100 GPUs, 48 vCPUs, 340GB RAM",
+      "a2-highgpu-8g - Accelerator Optimized: 8 NVIDIA Tesla A100 GPUs, 96 vCPUs, 680GB RAM",
+      "a2-megagpu-16g - Accelerator Optimized: 16 NVIDIA Tesla A100 GPUs, 96 vCPUs, 1360GB RAM",
+      "c4a-highcpu-1 - 1 vCPUs, 2 GB RAM",
+      "c4d-highcpu-2 - 2 vCPUs, 3 GB RAM",
+      "c4-highcpu-2 - 2 vCPUs, 4 GB RAM",
+      "c4a-highcpu-2 - 2 vCPUs, 4 GB RAM",
+      "c4a-standard-1 - 1 vCPUs, 4 GB RAM",
+      "n4-highcpu-2 - 2 vCPUs, 4 GB RAM",
+      "t2a-standard-1 - 1 vCPUs, 4 GB RAM",
+      "t2d-standard-1 - 1 vCPUs, 4 GB RAM",
+      "c4-standard-2 - 2 vCPUs, 7 GB RAM",
+      "c4d-highcpu-4 - 4 vCPUs, 7 GB RAM",
+      "c4d-standard-2 - 2 vCPUs, 7 GB RAM",
+      "c3-highcpu-4 - 4 vCPUs, 8 GB RAM",
+      "c3d-highcpu-4 - 4 vCPUs, 8 GB RAM",
+      "c4-highcpu-4 - 4 vCPUs, 8 GB RAM",
+      "c4a-highcpu-4 - 4 vCPUs, 8 GB RAM",
+      "c4a-highmem-1 - 1 vCPUs, 8 GB RAM",
+      "c4a-standard-2 - 2 vCPUs, 8 GB RAM",
+      "n4-highcpu-4 - 4 vCPUs, 8 GB RAM",
+      "n4-standard-2 - 2 vCPUs, 8 GB RAM",
+      "t2a-standard-2 - 2 vCPUs, 8 GB RAM",
+      "t2d-standard-2 - 2 vCPUs, 8 GB RAM",
+      "c4-highmem-2 - 2 vCPUs, 15 GB RAM",
+      "c4-standard-4 - 4 vCPUs, 15 GB RAM",
+      "c4-standard-4-lssd - 4 vCPUs, 15 GB RAM",
+      "c4d-highcpu-8 - 8 vCPUs, 15 GB RAM",
+      "c4d-highmem-2 - 2 vCPUs, 15 GB RAM",
+      "c4d-standard-4 - 4 vCPUs, 15 GB RAM",
+      "c3-highcpu-8 - 8 vCPUs, 16 GB RAM",
+      "c3-standard-4 - 4 vCPUs, 16 GB RAM",
+      "c3-standard-4-lssd - 4 vCPUs, 16 GB RAM, 1 local SSD",
+      "c3d-highcpu-8 - 8 vCPUs, 16 GB RAM",
+      "c3d-standard-4 - 4 vCPUs, 16 GB RAM",
+      "c4-highcpu-8 - 8 vCPUs, 16 GB RAM",
+      "c4a-highcpu-8 - 8 vCPUs, 16 GB RAM",
+      "c4a-highmem-2 - 2 vCPUs, 16 GB RAM",
+      "c4a-standard-4 - 4 vCPUs, 16 GB RAM",
+      "c4a-standard-4-lssd - 4 vCPUs, 16 GB RAM, 1 local SSD",
+      "g2-standard-4 - Graphics Optimized: 1 NVIDIA L4 GPU, 4 vCPUs, 16GB RAM",
+      "n4-highcpu-8 - 8 vCPUs, 16 GB RAM",
+      "n4-highmem-2 - 2 vCPUs, 16 GB RAM",
+      "n4-standard-4 - 4 vCPUs, 16 GB RAM",
+      "t2a-standard-4 - 4 vCPUs, 16 GB RAM",
+      "t2d-standard-4 - 4 vCPUs, 16 GB RAM",
+      "c4-standard-8 - 8 vCPUs, 30 GB RAM",
+      "c4-standard-8-lssd - 8 vCPUs, 30 GB RAM",
+      "c4d-highcpu-16 - 16 vCPUs, 30 GB RAM",
+      "c4-highmem-4 - 4 vCPUs, 31 GB RAM",
+      "c4-highmem-4-lssd - 4 vCPUs, 31 GB RAM",
+      "c4d-highmem-4 - 4 vCPUs, 31 GB RAM",
+      "c4d-standard-8 - 8 vCPUs, 31 GB RAM",
+      "c4d-standard-8-lssd - 8 vCPUs, 31 GB RAM, 1 local SSD",
+      "c3-highmem-4 - 4 vCPUs, 32 GB RAM",
+      "c3-standard-8 - 8 vCPUs, 32 GB RAM",
+      "c3-standard-8-lssd - 8 vCPUs, 32 GB RAM, 2 local SSDs",
+      "c3d-highcpu-16 - 16 vCPUs, 32 GB RAM",
+      "c3d-highmem-4 - 4 vCPUs, 32 GB RAM",
+      "c3d-standard-8 - 8 vCPUs, 32 GB RAM",
+      "c3d-standard-8-lssd - 8 vCPUs, 32 GB RAM, 1 local SSD",
+      "c4-highcpu-16 - 16 vCPUs, 32 GB RAM",
+      "c4a-highcpu-16 - 16 vCPUs, 32 GB RAM",
+      "c4a-highmem-4 - 4 vCPUs, 32 GB RAM",
+      "c4a-highmem-4-lssd - 4 vCPUs, 32 GB RAM, 1 local SSD",
+      "c4a-standard-8 - 8 vCPUs, 32 GB RAM",
+      "c4a-standard-8-lssd - 8 vCPUs, 32 GB RAM, 2 local SSD",
+      "g2-standard-8 - Graphics Optimized: 1 NVIDIA L4 GPU, 8 vCPUs, 32GB RAM",
+      "n4-highcpu-16 - 16 vCPUs, 32 GB RAM",
+      "n4-highmem-4 - 4 vCPUs, 32 GB RAM",
+      "n4-standard-8 - 8 vCPUs, 32 GB RAM",
+      "t2a-standard-8 - 8 vCPUs, 32 GB RAM",
+      "t2d-standard-8 - 8 vCPUs, 32 GB RAM",
+      "c3-highcpu-22 - 22 vCPUs, 44 GB RAM",
+      "c4-highcpu-24 - 24 vCPUs, 48 GB RAM",
+      "ct5l-hightpu-1t - 24 vCPUs, 48 GB RAM, 1 Google TPUs",
+      "ct5lp-hightpu-1t - 24 vCPUs, 48 GB RAM, 1 Google TPUs",
+      "g2-standard-12 - Graphics Optimized: 1 NVIDIA L4 GPU, 12 vCPUs, 48GB RAM",
+      "c3d-highcpu-30 - 30 vCPUs, 59 GB RAM",
+      "c4-standard-16 - 16 vCPUs, 60 GB RAM",
+      "c4-standard-16-lssd - 16 vCPUs, 60 GB RAM",
+      "c4d-highcpu-32 - 32 vCPUs, 60 GB RAM",
+      "c4-highmem-8 - 8 vCPUs, 62 GB RAM",
+      "c4-highmem-8-lssd - 8 vCPUs, 62 GB RAM",
+      "c4d-standard-16 - 16 vCPUs, 62 GB RAM",
+      "c4d-standard-16-lssd - 16 vCPUs, 62 GB RAM, 1 local SSD",
+      "c4d-highmem-8 - 8 vCPUs, 63 GB RAM",
+      "c4d-highmem-8-lssd - 8 vCPUs, 63 GB RAM, 1 local SSD",
+      "c3-highmem-8 - 8 vCPUs, 64 GB RAM",
+      "c3d-highmem-8 - 8 vCPUs, 64 GB RAM",
+      "c3d-highmem-8-lssd - 8 vCPUs, 64 GB RAM, 1 local SSD",
+      "c3d-standard-16 - 16 vCPUs, 64 GB RAM",
+      "c3d-standard-16-lssd - 16 vCPUs, 64 GB RAM, 1 local SSD",
+      "c4-highcpu-32 - 32 vCPUs, 64 GB RAM",
+      "c4a-highcpu-32 - 32 vCPUs, 64 GB RAM",
+      "c4a-highmem-8 - 8 vCPUs, 64 GB RAM",
+      "c4a-highmem-8-lssd - 8 vCPUs, 64 GB RAM, 2 local SSD",
+      "c4a-standard-16 - 16 vCPUs, 64 GB RAM",
+      "c4a-standard-16-lssd - 16 vCPUs, 64 GB RAM, 4 local SSD",
+      "g2-standard-16 - Graphics Optimized: 1 NVIDIA L4 GPU, 16 vCPUs, 64GB RAM",
+      "n4-highcpu-32 - 32 vCPUs, 64 GB RAM",
+      "n4-highmem-8 - 8 vCPUs, 64 GB RAM",
+      "n4-standard-16 - 16 vCPUs, 64 GB RAM",
+      "t2a-standard-16 - 16 vCPUs, 64 GB RAM",
+      "t2d-standard-16 - 16 vCPUs, 64 GB RAM",
+      "z3-highmem-8-highlssd - 8 vCPUs, 64 GB RAM, 1 Local SSDs",
+      "c3-highcpu-44 - 44 vCPUs, 88 GB RAM",
+      "c3-standard-22 - 22 vCPUs, 88 GB RAM",
+      "c3-standard-22-lssd - 22 vCPUs, 88 GB RAM, 4 local SSDs",
+      "c4-standard-24 - 24 vCPUs, 90 GB RAM",
+      "c4-standard-24-lssd - 24 vCPUs, 90 GB RAM, 4 local SSDs",
+      "c4d-highcpu-48 - 48 vCPUs, 90 GB RAM",
+      "c4-highcpu-48 - 48 vCPUs, 96 GB RAM",
+      "c4a-highcpu-48 - 48 vCPUs, 96 GB RAM",
+      "g2-standard-24 - Graphics Optimized: 2 NVIDIA L4 GPUs, 24 vCPUs, 96GB RAM",
+      "n4-highcpu-48 - 48 vCPUs, 96 GB RAM",
+      "z3-highmem-14-standardlssd - 14 vCPUs, 112 GB RAM, 1 Local SSDs",
+      "c3d-highcpu-60 - 60 vCPUs, 118 GB RAM",
+      "c3d-standard-30 - 30 vCPUs, 120 GB RAM",
+      "c3d-standard-30-lssd - 30 vCPUs, 120 GB RAM, 2 local SSDs",
+      "c4-standard-32 - 32 vCPUs, 120 GB RAM",
+      "c4-standard-32-lssd - 32 vCPUs, 120 GB RAM",
+      "c4d-highcpu-64 - 64 vCPUs, 120 GB RAM",
+      "c4-highmem-16 - 16 vCPUs, 124 GB RAM",
+      "c4-highmem-16-lssd - 16 vCPUs, 124 GB RAM",
+      "c4d-standard-32 - 32 vCPUs, 124 GB RAM",
+      "c4d-standard-32-lssd - 32 vCPUs, 124 GB RAM, 2 local SSDs",
+      "c4d-highmem-16 - 16 vCPUs, 126 GB RAM",
+      "c4d-highmem-16-lssd - 16 vCPUs, 126 GB RAM, 1 local SSD",
+      "c3d-highmem-16 - 16 vCPUs, 128 GB RAM",
+      "c3d-highmem-16-lssd - 16 vCPUs, 128 GB RAM, 1 local SSD",
+      "c4a-highcpu-64 - 64 vCPUs, 128 GB RAM",
+      "c4a-highmem-16 - 16 vCPUs, 128 GB RAM",
+      "c4a-highmem-16-lssd - 16 vCPUs, 128 GB RAM, 4 local SSD",
+      "c4a-standard-32 - 32 vCPUs, 128 GB RAM",
+      "c4a-standard-32-lssd - 32 vCPUs, 128 GB RAM, 6 local SSD",
+      "g2-standard-32 - Graphics Optimized: 1 NVIDIA L4 GPU, 32 vCPUs, 128GB RAM",
+      "n4-highcpu-64 - 64 vCPUs, 128 GB RAM",
+      "n4-highmem-16 - 16 vCPUs, 128 GB RAM",
+      "n4-standard-32 - 32 vCPUs, 128 GB RAM",
+      "t2a-standard-32 - 32 vCPUs, 128 GB RAM",
+      "t2d-standard-32 - 32 vCPUs, 128 GB RAM",
+      "z3-highmem-16-highlssd - 16 vCPUs, 128 GB RAM, 2 Local SSDs",
+      "c4a-highcpu-72 - 72 vCPUs, 144 GB RAM",
+      "n4-highcpu-80 - 80 vCPUs, 160 GB RAM",
+      "a2-ultragpu-1g - Accelerator Optimized: 1 NVIDIA A100 80GB GPU, 12 vCPUs, 170GB RAM, 1 local SSD",
+      "c3-highcpu-88 - 88 vCPUs, 176 GB RAM",
+      "c3-highmem-22 - 22 vCPUs, 176 GB RAM",
+      "c3-standard-44 - 44 vCPUs, 176 GB RAM",
+      "c3-standard-44-lssd - 44 vCPUs, 176 GB RAM, 8 local SSDs",
+      "z3-highmem-22-highlssd - 22 vCPUs, 176 GB RAM, 3 Local SSDs",
+      "z3-highmem-22-standardlssd - 22 vCPUs, 176 GB RAM, 2 Local SSDs",
+      "ct6e-standard-1t - 44 vCPUs, 176 GB RAM, 1 Google V6 lite TPUs",
+      "c3d-highcpu-90 - 90 vCPUs, 177 GB RAM",
+      "c4-standard-48 - 48 vCPUs, 180 GB RAM",
+      "c4-standard-48-lssd - 48 vCPUs, 180 GB RAM",
+      "c4d-highcpu-96 - 96 vCPUs, 180 GB RAM",
+      "c4-highmem-24 - 24 vCPUs, 186 GB RAM",
+      "c4-highmem-24-lssd - 24 vCPUs, 186 GB RAM, 4 local SSDs",
+      "c4d-standard-48 - 48 vCPUs, 186 GB RAM",
+      "c4d-standard-48-lssd - 48 vCPUs, 186 GB RAM, 4 local SSDs",
+      "c4-highcpu-96 - 96 vCPUs, 192 GB RAM",
+      "c4a-standard-48 - 48 vCPUs, 192 GB RAM",
+      "c4a-standard-48-lssd - 48 vCPUs, 192 GB RAM, 10 local SSD",
+      "ct5l-hightpu-4t - 112 vCPUs, 192 GB RAM, 4 Google TPUs",
+      "ct5lp-hightpu-4t - 112 vCPUs, 192 GB RAM, 4 Google TPUs",
+      "g2-standard-48 - Graphics Optimized: 4 NVIDIA L4 GPUs, 48 vCPUs, 192GB RAM",
+      "n4-standard-48 - 48 vCPUs, 192 GB RAM",
+      "t2a-standard-48 - 48 vCPUs, 192 GB RAM",
+      "t2d-standard-48 - 48 vCPUs, 192 GB RAM",
+      "a3-highgpu-1g - Accelerator Optimized: 1 NVIDIA H100 GPU, 26 vCPUs, 234GB RAM",
+      "c3d-highmem-30 - 30 vCPUs, 240 GB RAM",
+      "c3d-highmem-30-lssd - 30 vCPUs, 240 GB RAM, 2 local SSDs",
+      "c3d-standard-60 - 60 vCPUs, 240 GB RAM",
+      "c3d-standard-60-lssd - 60 vCPUs, 240 GB RAM, 4 local SSDs",
+      "t2d-standard-60 - 60 vCPUs, 240 GB RAM",
+      "c4-highmem-32 - 32 vCPUs, 248 GB RAM",
+      "c4-highmem-32-lssd - 32 vCPUs, 248 GB RAM",
+      "c4d-standard-64 - 64 vCPUs, 248 GB RAM",
+      "c4d-standard-64-lssd - 64 vCPUs, 248 GB RAM, 6 local SSDs",
+      "c4d-highmem-32 - 32 vCPUs, 252 GB RAM",
+      "c4d-highmem-32-lssd - 32 vCPUs, 252 GB RAM, 2 local SSDs",
+      "c4a-highmem-32 - 32 vCPUs, 256 GB RAM",
+      "c4a-highmem-32-lssd - 32 vCPUs, 256 GB RAM, 6 local SSD",
+      "c4a-standard-64 - 64 vCPUs, 256 GB RAM",
+      "c4a-standard-64-lssd - 64 vCPUs, 256 GB RAM, 14 local SSD",
+      "n4-highmem-32 - 32 vCPUs, 256 GB RAM",
+      "n4-standard-64 - 64 vCPUs, 256 GB RAM",
+      "z3-highmem-32-highlssd - 32 vCPUs, 256 GB RAM, 4 Local SSDs",
+      "c4-highcpu-144 - 144 vCPUs, 288 GB RAM",
+      "c4a-standard-72 - 72 vCPUs, 288 GB RAM",
+      "c4a-standard-72-lssd - 72 vCPUs, 288 GB RAM, 16 local SSD",
+      "n4-standard-80 - 80 vCPUs, 320 GB RAM",
+      "a2-ultragpu-2g - Accelerator Optimized: 2 NVIDIA A100 80GB GPUs, 24 vCPUs, 340GB RAM, 2 local SSD",
+      "ct3-hightpu-4t - 96 vCPUs, 340 GB RAM, 2 vNUMA nodes",
+      "ct3p-hightpu-4t - 48 vCPUs, 340 GB RAM, 1 vNUMA nodes",
+      "c3-highcpu-176 - 176 vCPUs, 352 GB RAM",
+      "c3-highmem-44 - 44 vCPUs, 352 GB RAM",
+      "c3-standard-88 - 88 vCPUs, 352 GB RAM",
+      "c3-standard-88-lssd - 88 vCPUs, 352 GB RAM, 16 local SSDs",
+      "h3-standard-88 - 88 vCPUs, 352 GB RAM",
+      "z3-highmem-44-highlssd - 44 vCPUs, 352 GB RAM, 6 Local SSDs",
+      "z3-highmem-44-standardlssd - 44 vCPUs, 352 GB RAM, 3 Local SSDs",
+      "c3d-highcpu-180 - 180 vCPUs, 354 GB RAM",
+      "c3d-standard-90 - 90 vCPUs, 360 GB RAM",
+      "c3d-standard-90-lssd - 90 vCPUs, 360 GB RAM, 8 local SSDs",
+      "c4-standard-96 - 96 vCPUs, 360 GB RAM",
+      "c4-standard-96-lssd - 96 vCPUs, 360 GB RAM",
+      "c4d-highcpu-192 - 192 vCPUs, 360 GB RAM",
+      "c4-highmem-48 - 48 vCPUs, 372 GB RAM",
+      "c4-highmem-48-lssd - 48 vCPUs, 372 GB RAM",
+      "c4d-standard-96 - 96 vCPUs, 372 GB RAM",
+      "c4d-standard-96-lssd - 96 vCPUs, 372 GB RAM, 8 local SSDs",
+      "m4-megamem-28 - 28 vCPUs, 372 GB RAM",
+      "c4d-highmem-48 - 48 vCPUs, 378 GB RAM",
+      "c4d-highmem-48-lssd - 48 vCPUs, 378 GB RAM, 4 local SSDs",
+      "c4-highcpu-192 - 192 vCPUs, 384 GB RAM",
+      "c4a-highmem-48 - 48 vCPUs, 384 GB RAM",
+      "c4a-highmem-48-lssd - 48 vCPUs, 384 GB RAM, 10 local SSD",
+      "ct5l-hightpu-8t - 224 vCPUs, 384 GB RAM, 8 Google TPUs",
+      "ct5lp-hightpu-8t - 224 vCPUs, 384 GB RAM, 8 Google TPUs",
+      "g2-standard-96 - Graphics Optimized: 8 NVIDIA L4 GPUs, 96 vCPUs, 384GB RAM",
+      "n4-highmem-48 - 48 vCPUs, 384 GB RAM",
+      "ct5p-hightpu-4t - 208 vCPUs, 448 GB RAM, 4 Google TPUs",
+      "a3-highgpu-2g - Accelerator Optimized: 2 NVIDIA H100 GPU, 52 vCPUs, 468GB RAM",
+      "c3d-highmem-60 - 60 vCPUs, 480 GB RAM",
+      "c3d-highmem-60-lssd - 60 vCPUs, 480 GB RAM, 4 local SSDs",
+      "c4d-highmem-64 - 64 vCPUs, 504 GB RAM",
+      "c4d-highmem-64-lssd - 64 vCPUs, 504 GB RAM, 6 local SSDs",
+      "c4a-highmem-64 - 64 vCPUs, 512 GB RAM",
+      "c4a-highmem-64-lssd - 64 vCPUs, 512 GB RAM, 14 local SSD",
+      "n4-highmem-64 - 64 vCPUs, 512 GB RAM",
+      "c3-highcpu-192-metal - Compute Optimized Bare Metal: 192 vCPUs, 512 GB RAM",
+      "c4-standard-144 - 144 vCPUs, 540 GB RAM",
+      "c4-standard-144-lssd - 144 vCPUs, 540 GB RAM, 24 local SSDs",
+      "c4-highcpu-288 - 288 vCPUs, 576 GB RAM",
+      "c4a-highmem-72 - 72 vCPUs, 576 GB RAM",
+      "c4a-highmem-72-lssd - 72 vCPUs, 576 GB RAM, 16 local SSD",
+      "m2-ultramemx-96 - 96 vCPUs, 600 GB RAM, 2.9 TB PMEM",
+      "n4-highmem-80 - 80 vCPUs, 640 GB RAM",
+      "a2-ultragpu-4g - Accelerator Optimized: 4 NVIDIA A100 80GB GPUs, 48 vCPUs, 680GB RAM, 4 local SSD",
+      "c3-highmem-88 - 88 vCPUs, 704 GB RAM",
+      "c3-standard-176 - 176 vCPUs, 704 GB RAM",
+      "c3-standard-176-lssd - 176 vCPUs, 704 GB RAM, 32 local SSDs",
+      "z3-highmem-88 - 88 vCPUs, 704 GB RAM, 12 Local SSDs",
+      "z3-highmem-88-highlssd - 88 vCPUs, 704 GB RAM, 12 Local SSDs",
+      "z3-highmem-88-standardlssd - 88 vCPUs, 704 GB RAM, 6 Local SSDs",
+      "c3d-highcpu-360 - 360 vCPUs, 708 GB RAM",
+      "c3d-highmem-90 - 90 vCPUs, 720 GB RAM",
+      "c3d-highmem-90-lssd - 90 vCPUs, 720 GB RAM, 8 local SSDs",
+      "c3d-standard-180 - 180 vCPUs, 720 GB RAM",
+      "c3d-standard-180-lssd - 180 vCPUs, 720 GB RAM, 16 local SSDs",
+      "c4-standard-192 - 192 vCPUs, 720 GB RAM",
+      "c4-standard-192-lssd - 192 vCPUs, 720 GB RAM",
+      "c4d-highcpu-384 - 384 vCPUs, 720 GB RAM",
+      "ct6e-standard-4t - 180 vCPUs, 720 GB RAM, 4 Google V6 lite TPUs",
+      "c4-highmem-96 - 96 vCPUs, 744 GB RAM",
+      "c4-highmem-96-lssd - 96 vCPUs, 744 GB RAM",
+      "c4d-standard-192 - 192 vCPUs, 744 GB RAM",
+      "c4d-standard-192-lssd - 192 vCPUs, 744 GB RAM, 16 local SSDs",
+      "m4-megamem-56 - 56 vCPUs, 744 GB RAM",
+      "c4d-highmem-96 - 96 vCPUs, 756 GB RAM",
+      "c4d-highmem-96-lssd - 96 vCPUs, 756 GB RAM, 8 local SSDs",
+      "c3-standard-192-metal - Compute Optimized Bare Metal: 192 vCPUs, 768 GB RAM",
+      "c4d-highcpu-384-metal - 384 vCPUs, 768 GB RAM",
+      "a3-highgpu-4g - Accelerator Optimized: 4 NVIDIA H100 GPU, 104 vCPUs, 936GB RAM",
+      "n1-ultramem-40 - 40 vCPUs, 961 GB RAM",
+      "m3-megamem-64 - 64 vCPUs, 976 GB RAM",
+      "m3-ultramem-32 - 32 vCPUs, 976 GB RAM",
+      "c4-standard-288 - 288 vCPUs, 1080 GB RAM",
+      "c4-standard-288-lssd - 288 vCPUs, 1080 GB RAM, 48 local SSDs",
+      "c4-standard-288-metal - 288 vCPUs, 1080 GB RAM",
+      "c4-highmem-144 - 144 vCPUs, 1116 GB RAM",
+      "c4-highmem-144-lssd - 144 vCPUs, 1116 GB RAM, 24 local SSDs",
+      "m2-ultramem2x-96 - 96 vCPUs, 1.3 TB RAM, 5.9 TB PMEM",
+      "a2-ultragpu-8g - Accelerator Optimized: 8 NVIDIA A100 80GB GPUs, 96 vCPUs, 1360GB RAM, 8 local SSD",
+      "c3-highmem-176 - 176 vCPUs, 1408 GB RAM",
+      "z3-highmem-176 - 176 vCPUs, 1408 GB RAM, 12 Local SSDs",
+      "z3-highmem-176-standardlssd - 176 vCPUs, 1408 GB RAM, 12 Local SSDs",
+      "n1-megamem-96 - 96 vCPUs, 1.4 TB RAM",
+      "c3d-highmem-180 - 180 vCPUs, 1440 GB RAM",
+      "c3d-highmem-180-lssd - 180 vCPUs, 1440 GB RAM, 16 local SSDs",
+      "c3d-standard-360 - 360 vCPUs, 1440 GB RAM",
+      "c3d-standard-360-lssd - 360 vCPUs, 1440 GB RAM, 32 local SSDs",
+      "ct6e-standard-8t - 360 vCPUs, 1440 GB RAM, 8 Google V6 lite TPUs",
+      "c4-highmem-192 - 192 vCPUs, 1488 GB RAM",
+      "c4-highmem-192-lssd - 192 vCPUs, 1488 GB RAM",
+      "c4d-standard-384 - 384 vCPUs, 1488 GB RAM",
+      "c4d-standard-384-lssd - 384 vCPUs, 1488 GB RAM, 32 local SSDs",
+      "m4-megamem-112 - 112 vCPUs, 1488 GB RAM",
+      "m4-ultramem-56 - 56 vCPUs, 1488 GB RAM",
+      "c4d-highmem-192 - 192 vCPUs, 1512 GB RAM",
+      "c4d-highmem-192-lssd - 192 vCPUs, 1512 GB RAM, 16 local SSDs",
+      "c3-highmem-192-metal - Compute Optimized Bare Metal: 192 vCPUs, 1.5 TB RAM",
+      "c4d-standard-384-metal - 384 vCPUs, 1536 GB RAM",
+      "a3-edgegpu-8g - Accelerator Optimized: 8 NVIDIA H100 GPU, 208 vCPUs, 1872GB RAM",
+      "a3-edgegpu-8g-nolssd - Accelerator Optimized: 8 NVIDIA H100 GPU, 208 vCPUs, 1872GB RAM, No LocalSSD",
+      "a3-highgpu-8g - Accelerator Optimized: 8 NVIDIA H100 GPU, 208 vCPUs, 1872GB RAM, 16 local SSD",
+      "a3-megagpu-8g - Accelerator Optimized: 8 NVIDIA H100 GPU, 208 vCPUs, 1872GB RAM, 16 local SSD",
+      "n1-ultramem-80 - 80 vCPUs, 1922 GB RAM",
+      "m3-megamem-128 - 128 vCPUs, 1952 GB RAM",
+      "m3-ultramem-64 - 64 vCPUs, 1952 GB RAM",
+      "c4-highmem-288 - 288 vCPUs, 2232 GB RAM",
+      "c4-highmem-288-lssd - 288 vCPUs,  2232 GB RAM, 48 local SSDs",
+      "c4-highmem-288-metal - 288 vCPUs, 2232 GB RAM",
+      "c3d-highmem-360 - 360 vCPUs, 2880 GB RAM",
+      "c3d-highmem-360-lssd - 360 vCPUs, 2880 GB RAM, 32 local SSDs",
+      "a3-ultragpu-8g - Accelerator Optimized: 8 NVIDIA H200 GPU, 224 vCPUs, 2952GB RAM",
+      "a3-ultragpu-8g-nolssd - Accelerator Optimized: 8 NVIDIA H200 GPU, 224 vCPUs, 2952GB RAM, No LocalSSD",
+      "m4-megamem-224 - 224 vCPUs, 2976 GB RAM",
+      "m4-ultramem-112 - 112 vCPUs, 2976 GB RAM",
+      "c4d-highmem-384 - 384 vCPUs, 3024 GB RAM",
+      "c4d-highmem-384-lssd - 384 vCPUs, 3024 GB RAM, 32 local SSDs",
+      "c4d-highmem-384-metal - 384 vCPUs, 3072 GB RAM",
+      "n1-ultramem-160 - 160 vCPUs, 3844 GB RAM",
+      "m3-ultramem-128 - 128 vCPUs, 3904 GB RAM",
+      "a4-highgpu-8g - Accelerator Optimized: 8 NVIDIA B200 GPU, 224 vCPUs, 3968GB RAM",
+      "m2-megamem-416 - 416 vCPUs, 5.75 TB RAM",
+      "m2-ultramem-208 - 208 vCPUs, 5.75 TB RAM",
+      "m4-ultramem-224 - 224 vCPUs, 5952 GB RAM",
+      "m2-hypermem-416 - 416 vCPUs, 8.625 TB RAM",
+      "m2-ultramem-416 - 416 vCPUs, 11.50 TB RAM",
+      "x4-megamem-960-metal - 960 vCPUs, 16384 GB RAM",
+      "x4-megamem-1440-metal - 1440 vCPUs, 24576 GB RAM",
+      "x4-megamem-1920-metal - 1920 vCPUs, 32768 GB RAM",
+      "z3-highmem-192-highlssd-metal - Storage Optimized Bare Metal: 192 vCPUs, 1.5 TB RAM"
+    ]
+  }
 }
