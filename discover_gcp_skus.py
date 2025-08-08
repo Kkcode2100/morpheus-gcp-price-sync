@@ -3,32 +3,33 @@
 GCP SKU Discovery Script
 
 This script reads service_plans.json, filters Google service plans, 
-authenticates to Google Cloud Billing API, and fetches relevant SKUs.
+authenticates to Google Cloud Billing API, and fetches relevant SKUs
+aligned to Morpheus service plans.
 
 Features:
-- Reads and filters Google service plans from Morpheus
-- Authenticates to GCP Billing API using service account
-- Discovers Compute Engine service and fetches all SKUs
-- Filters SKUs relevant to Morpheus Google service plans
-- Handles pagination and retries
-- Saves results to gcp_skus.json
+- Loads service_plans.json and filters plans with provisionType.name containing "Google"
+- Extracts plan names and resource types (machine, storage, kubernetes)
+- Maintains mapping table for Compute Engine, Persistent Disk, and Kubernetes Engine SKUs
+- Authenticates to GCP Billing API using GOOGLE_APPLICATION_CREDENTIALS
+- Handles region filtering (GLOBAL or specified region)
+- Implements exponential backoff retry logic (max 3 tries per API call)
+- Comprehensive logging and error handling
+- Outputs gcp_skus.json in original API schema
 
 Usage:
-  python discover_gcp_skus.py
+  python discover_gcp_skus.py --region us-central1
+  python discover_gcp_skus.py  # defaults to asia-southeast2
 """
 
+import argparse
 import json
 import logging
 import os
 import re
 import sys
 import time
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Set, Tuple
 import urllib3
-
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 # Google Cloud Billing API
 try:
@@ -37,15 +38,33 @@ try:
     from googleapiclient.errors import HttpError
     GCP_API_AVAILABLE = True
 except ImportError as e:
-    logger = logging.getLogger(__name__)
-    logger.warning(f"Google Cloud libraries not available: {e}")
     GCP_API_AVAILABLE = False
+    print(f"Google Cloud libraries not available: {e}")
+    print("Please install: pip install google-auth google-api-python-client")
 
 # --- Configuration ---
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-GCP_REGION = os.getenv("GCP_REGION", "asia-southeast2")
 SERVICE_PLANS_FILE = "service_plans.json"
 OUTPUT_FILE = "gcp_skus.json"
+
+# Service mapping for different GCP services
+SERVICE_MAPPING = {
+    'compute_engine': {
+        'service_names': ['Compute Engine'],
+        'machine_families': ['n1', 'n2', 'e2', 'c2', 't2d', 'm1', 'm2', 'm3', 'a2', 'c3', 'c3d'],
+        'resource_types': ['machine', 'vm', 'instance']
+    },
+    'persistent_disk': {
+        'service_names': ['Compute Engine'],  # PD SKUs are under Compute Engine
+        'disk_types': ['pd-ssd', 'pd-balanced', 'pd-standard', 'pd-extreme'],
+        'resource_types': ['storage', 'disk']
+    },
+    'kubernetes_engine': {
+        'service_names': ['Kubernetes Engine'],
+        'cluster_types': ['gke', 'autopilot'],
+        'resource_types': ['kubernetes', 'container']
+    }
+}
 
 # --- Setup ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -54,7 +73,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class GCPBillingClient:
-    """Client for interacting with Google Cloud Billing API."""
+    """Client for interacting with Google Cloud Billing API with retry logic."""
     
     def __init__(self, credentials_path: str):
         """Initialize the GCP Billing client with service account credentials."""
@@ -72,61 +91,83 @@ class GCPBillingClient:
             logger.error(f"Failed to authenticate to Google Cloud Billing API: {e}")
             raise
     
+    def _retry_api_call(self, api_call_func, max_retries: int = 3):
+        """Execute API call with exponential backoff retry logic."""
+        for attempt in range(max_retries):
+            try:
+                return api_call_func()
+            except HttpError as e:
+                if attempt == max_retries - 1:
+                    logger.error(f"API call failed after {max_retries} attempts: {e}")
+                    raise
+                
+                # Exponential backoff: 1, 2, 4 seconds
+                wait_time = 2 ** attempt
+                logger.warning(f"API call failed (attempt {attempt + 1}/{max_retries}), retrying in {wait_time}s: {e}")
+                time.sleep(wait_time)
+            except Exception as e:
+                logger.error(f"Unexpected error in API call: {e}")
+                raise
+    
     def get_services(self, page_size: int = 200) -> List[Dict]:
-        """Get all billing services from GCP."""
+        """Get all billing services from GCP with pagination and retry logic."""
         logger.info("Fetching GCP billing services...")
         services = []
         next_page_token = None
         
         while True:
-            try:
-                request = self.service.services().list(
+            def api_call():
+                return self.service.services().list(
                     pageSize=page_size,
                     pageToken=next_page_token
-                )
-                response = request.execute()
+                ).execute()
+            
+            response = self._retry_api_call(api_call)
+            
+            batch_services = response.get('services', [])
+            services.extend(batch_services)
+            logger.info(f"Retrieved {len(batch_services)} services (total: {len(services)})")
+            
+            next_page_token = response.get('nextPageToken')
+            if not next_page_token:
+                break
                 
-                batch_services = response.get('services', [])
-                services.extend(batch_services)
-                logger.info(f"Retrieved {len(batch_services)} services (total: {len(services)})")
-                
-                next_page_token = response.get('nextPageToken')
-                if not next_page_token:
-                    break
-                    
-                time.sleep(0.1)  # Rate limiting
-                
-            except HttpError as e:
-                logger.error(f"Error fetching services: {e}")
-                raise
+            time.sleep(0.1)  # Rate limiting
         
         logger.info(f"Successfully retrieved {len(services)} total services")
         return services
     
-    def find_compute_engine_service(self, services: List[Dict]) -> Optional[str]:
-        """Find the serviceId for Compute Engine."""
-        logger.info("Looking for Compute Engine service...")
+    def find_services_by_names(self, services: List[Dict], service_names: List[str]) -> Dict[str, str]:
+        """Find service IDs for given service names."""
+        logger.info(f"Looking for services: {service_names}")
+        found_services = {}
         
         for service in services:
             display_name = service.get('displayName', '')
             service_id = service.get('serviceId', '')
             
-            if 'Compute Engine' in display_name:
-                logger.info(f"Found Compute Engine service: {display_name} (ID: {service_id})")
-                return service_id
+            for target_name in service_names:
+                if target_name in display_name:
+                    found_services[target_name] = service_id
+                    logger.info(f"Found service: {display_name} (ID: {service_id})")
         
-        logger.error("Compute Engine service not found")
-        return None
+        # Log missing services
+        missing_services = set(service_names) - set(found_services.keys())
+        if missing_services:
+            logger.warning(f"Services not found: {missing_services}")
+        
+        return found_services
     
     def get_skus(self, service_id: str, currency_code: str = "USD", 
                  page_size: int = 1000, region_filter: Optional[str] = None) -> List[Dict]:
-        """Get all SKUs for a service with pagination."""
-        logger.info(f"Fetching SKUs for service {service_id}...")
+        """Get all SKUs for a service with pagination, retry logic, and region filtering."""
+        logger.info(f"Fetching SKUs for service {service_id} (region filter: {region_filter})")
         skus = []
+        filtered_skus = []
         next_page_token = None
         
         while True:
-            try:
+            def api_call():
                 request_params = {
                     'parent': f'services/{service_id}',
                     'currencyCode': currency_code,
@@ -136,25 +177,33 @@ class GCPBillingClient:
                 if next_page_token:
                     request_params['pageToken'] = next_page_token
                 
-                request = self.service.services().skus().list(**request_params)
-                response = request.execute()
+                return self.service.services().skus().list(**request_params).execute()
+            
+            response = self._retry_api_call(api_call)
+            
+            batch_skus = response.get('skus', [])
+            skus.extend(batch_skus)
+            
+            # Apply region filtering
+            for sku in batch_skus:
+                geo_taxonomy = sku.get('geoTaxonomy', {})
+                geo_type = geo_taxonomy.get('type', '')
+                regions = geo_taxonomy.get('regions', [])
                 
-                batch_skus = response.get('skus', [])
-                skus.extend(batch_skus)
-                logger.info(f"Retrieved {len(batch_skus)} SKUs (total: {len(skus)})")
+                # Include if GLOBAL or region matches
+                if geo_type == 'GLOBAL' or (region_filter and region_filter in regions):
+                    filtered_skus.append(sku)
+            
+            logger.info(f"Retrieved {len(batch_skus)} SKUs, {len(filtered_skus)} after region filtering (total: {len(skus)} fetched, {len(filtered_skus)} filtered)")
+            
+            next_page_token = response.get('nextPageToken')
+            if not next_page_token:
+                break
                 
-                next_page_token = response.get('nextPageToken')
-                if not next_page_token:
-                    break
-                    
-                time.sleep(0.1)  # Rate limiting
-                
-            except HttpError as e:
-                logger.error(f"Error fetching SKUs: {e}")
-                raise
+            time.sleep(0.1)  # Rate limiting
         
-        logger.info(f"Successfully retrieved {len(skus)} total SKUs")
-        return skus
+        logger.info(f"Successfully retrieved {len(skus)} total SKUs, {len(filtered_skus)} after region filtering")
+        return filtered_skus
 
 
 def load_service_plans(file_path: str) -> List[Dict]:
@@ -182,117 +231,212 @@ def filter_google_service_plans(service_plans: List[Dict]) -> List[Dict]:
     
     for plan in service_plans:
         provision_type = plan.get('provisionType', {})
-        provision_name = provision_type.get('name', '').lower()
-        provision_code = provision_type.get('code', '').lower()
+        provision_name = provision_type.get('name', '')
         
         # Filter by provision type containing "Google"
-        if 'google' in provision_name or provision_code == 'google':
+        if 'Google' in provision_name:
             google_plans.append(plan)
     
     logger.info(f"Found {len(google_plans)} Google service plans out of {len(service_plans)} total")
     return google_plans
 
 
-def extract_instance_types_from_plans(google_plans: List[Dict]) -> tuple[List[str], List[str]]:
-    """Extract instance types and families from Google service plans."""
-    logger.info("Extracting instance types from Google service plans...")
+def extract_plan_details(google_plans: List[Dict]) -> Dict[str, List[Dict]]:
+    """Extract plan names and classify by resource type (machine, storage, kubernetes)."""
+    logger.info("Extracting plan details and classifying by resource type...")
     
-    instance_types = set()
-    instance_families = set()
+    classified_plans = {
+        'machine': [],
+        'storage': [], 
+        'kubernetes': []
+    }
     
     for plan in google_plans:
         name = plan.get('name', '').lower()
         code = plan.get('code', '').lower()
         
-        # Extract instance patterns from name and code
-        patterns = [
-            r'([a-z]\d+[a-z]?-[a-z]+-\d+)',  # e2-standard-2, n2-standard-4
-            r'([a-z]\d+[a-z]?-[a-z]+)',      # e2-standard, n2-standard  
-            r'([a-z]\d+[a-z]?)',             # e2, n2, etc.
-            r'(f1|g1)-([a-z]+)',             # f1-micro, g1-small
-        ]
+        plan_info = {
+            'id': plan.get('id'),
+            'name': plan.get('name', ''),
+            'code': plan.get('code', ''),
+            'description': plan.get('description', ''),
+            'provisionType': plan.get('provisionType', {})
+        }
         
-        for text in [name, code]:
-            for pattern in patterns:
-                matches = re.findall(pattern, text)
-                for match in matches:
-                    if isinstance(match, tuple):
-                        instance_types.add('-'.join(match))
-                        instance_families.add(match[0])
-                    else:
-                        instance_types.add(match)
-                        # Extract family from instance type
-                        family_match = re.match(r'([a-z]\d+[a-z]?)', match)
-                        if family_match:
-                            instance_families.add(family_match.group(1))
+        # Classify by resource type based on name and code
+        if any(keyword in name or keyword in code for keyword in ['vm', 'instance', 'compute', 'machine']):
+            classified_plans['machine'].append(plan_info)
+        elif any(keyword in name or keyword in code for keyword in ['disk', 'storage', 'volume']):
+            classified_plans['storage'].append(plan_info)
+        elif any(keyword in name or keyword in code for keyword in ['gke', 'kubernetes', 'container', 'k8s']):
+            classified_plans['kubernetes'].append(plan_info)
+        else:
+            # Default to machine for unclassified Google plans
+            classified_plans['machine'].append(plan_info)
     
-    logger.info(f"Extracted {len(instance_types)} instance types and {len(instance_families)} families")
-    logger.info(f"Instance families: {sorted(instance_families)}")
+    for resource_type, plans in classified_plans.items():
+        logger.info(f"Classified {len(plans)} plans as {resource_type} type")
+        if plans:
+            logger.info(f"  Sample {resource_type} plans: {[p['name'] for p in plans[:3]]}")
     
-    return list(instance_types), list(instance_families)
+    return classified_plans
 
 
-def filter_relevant_skus(skus: List[Dict], instance_types: List[str], 
-                        instance_families: List[str], google_plans: List[Dict]) -> List[Dict]:
-    """Filter SKUs to only those relevant to Morpheus Google service plans."""
+def create_sku_mapping_patterns(classified_plans: Dict[str, List[Dict]]) -> Dict[str, List[str]]:
+    """Create regex patterns for matching SKUs to service plans."""
+    logger.info("Creating SKU mapping patterns...")
+    
+    patterns = {
+        'compute_engine': [],
+        'persistent_disk': [],
+        'kubernetes_engine': []
+    }
+    
+    # Extract machine family patterns from machine plans
+    for plan in classified_plans['machine']:
+        name = plan['name'].lower()
+        code = plan['code'].lower()
+        
+        # Extract machine family patterns (n1, n2, e2, etc.)
+        for family in SERVICE_MAPPING['compute_engine']['machine_families']:
+            if family in name or family in code:
+                patterns['compute_engine'].append(family)
+        
+        # Extract specific instance type patterns
+        instance_patterns = re.findall(r'([a-z]\d+[a-z]?)', name + ' ' + code)
+        patterns['compute_engine'].extend(instance_patterns)
+    
+    # Extract disk type patterns from storage plans
+    for plan in classified_plans['storage']:
+        name = plan['name'].lower()
+        code = plan['code'].lower()
+        
+        for disk_type in SERVICE_MAPPING['persistent_disk']['disk_types']:
+            if disk_type in name or disk_type in code:
+                patterns['persistent_disk'].append(disk_type)
+    
+    # Extract kubernetes patterns from kubernetes plans
+    for plan in classified_plans['kubernetes']:
+        name = plan['name'].lower()
+        code = plan['code'].lower()
+        
+        for cluster_type in SERVICE_MAPPING['kubernetes_engine']['cluster_types']:
+            if cluster_type in name or cluster_type in code:
+                patterns['kubernetes_engine'].append(cluster_type)
+    
+    # Add default patterns if none found
+    if not patterns['compute_engine']:
+        patterns['compute_engine'] = SERVICE_MAPPING['compute_engine']['machine_families'][:5]  # Use first 5 families
+    
+    if not patterns['persistent_disk']:
+        patterns['persistent_disk'] = SERVICE_MAPPING['persistent_disk']['disk_types']
+    
+    if not patterns['kubernetes_engine']:
+        patterns['kubernetes_engine'] = SERVICE_MAPPING['kubernetes_engine']['cluster_types']
+    
+    # Remove duplicates
+    for service, pattern_list in patterns.items():
+        patterns[service] = list(set(pattern_list))
+        logger.info(f"{service} patterns: {patterns[service]}")
+    
+    return patterns
+
+
+def filter_relevant_skus(skus: List[Dict], sku_patterns: Dict[str, List[str]], 
+                        classified_plans: Dict[str, List[Dict]]) -> Tuple[List[Dict], Dict[str, int]]:
+    """Filter SKUs to only those relevant to Morpheus service plans with fuzzy matching."""
     logger.info("Filtering SKUs relevant to Morpheus service plans...")
     
     relevant_skus = []
-    total_skus = len(skus)
-    
-    # Create matching patterns
-    instance_patterns = []
-    for instance_type in instance_types:
-        # Create regex patterns for instance type matching
-        instance_patterns.append(re.compile(rf'\b{re.escape(instance_type)}\b', re.IGNORECASE))
-    
-    family_patterns = []
-    for family in instance_families:
-        family_patterns.append(re.compile(rf'\b{re.escape(family)}\b', re.IGNORECASE))
-    
-    # Service plan name patterns for additional matching
-    plan_names = [plan.get('name', '') for plan in google_plans]
-    plan_codes = [plan.get('code', '') for plan in google_plans]
+    service_sku_counts = {'compute_engine': 0, 'persistent_disk': 0, 'kubernetes_engine': 0, 'other': 0}
     
     for sku in skus:
-        description = sku.get('description', '')
+        description = sku.get('description', '').lower()
         sku_id = sku.get('skuId', '')
         category = sku.get('category', {})
-        resource_family = category.get('resourceFamily', '')
+        resource_family = category.get('resourceFamily', '').lower()
+        service_display_name = category.get('serviceDisplayName', '').lower()
         
-        # Check if SKU matches any instance types
-        instance_match = any(pattern.search(description) for pattern in instance_patterns)
+        sku_matched = False
         
-        # Check if SKU matches any instance families  
-        family_match = any(pattern.search(description) for pattern in family_patterns)
+        # Check Compute Engine patterns
+        for pattern in sku_patterns['compute_engine']:
+            if pattern in description:
+                relevant_skus.append(sku)
+                service_sku_counts['compute_engine'] += 1
+                sku_matched = True
+                break
         
-        # Check for compute-related SKUs
-        compute_keywords = [
-            'vcpu', 'cpu', 'core', 'memory', 'ram', 'gb',
-            'instance', 'vm', 'virtual machine',
-            'compute', 'storage', 'disk'
-        ]
+        if not sku_matched:
+            # Check Persistent Disk patterns
+            for pattern in sku_patterns['persistent_disk']:
+                if pattern in description or 'disk' in description:
+                    relevant_skus.append(sku)
+                    service_sku_counts['persistent_disk'] += 1
+                    sku_matched = True
+                    break
         
-        keyword_match = any(keyword in description.lower() for keyword in compute_keywords)
+        if not sku_matched:
+            # Check Kubernetes Engine patterns
+            for pattern in sku_patterns['kubernetes_engine']:
+                if pattern in description or 'kubernetes' in service_display_name:
+                    relevant_skus.append(sku)
+                    service_sku_counts['kubernetes_engine'] += 1
+                    sku_matched = True
+                    break
         
-        # Check resource family
-        resource_match = resource_family.lower() in ['compute', 'storage', 'network']
-        
-        # Include SKU if it matches any criteria
-        if instance_match or family_match or (keyword_match and resource_match):
-            relevant_skus.append(sku)
+        if not sku_matched:
+            # Include general compute/storage SKUs that might be relevant
+            compute_keywords = ['vcpu', 'cpu', 'core', 'memory', 'ram', 'gb']
+            storage_keywords = ['storage', 'disk', 'volume']
+            
+            if (any(keyword in description for keyword in compute_keywords) and 
+                resource_family in ['compute', 'storage']) or \
+               (any(keyword in description for keyword in storage_keywords) and 
+                'compute' in service_display_name):
+                relevant_skus.append(sku)
+                service_sku_counts['other'] += 1
     
-    logger.info(f"Filtered {len(relevant_skus)} relevant SKUs from {total_skus} total SKUs")
-    return relevant_skus
+    logger.info(f"Filtered {len(relevant_skus)} relevant SKUs from {len(skus)} total SKUs")
+    logger.info(f"SKU breakdown: Compute Engine: {service_sku_counts['compute_engine']}, "
+                f"Persistent Disk: {service_sku_counts['persistent_disk']}, "
+                f"Kubernetes Engine: {service_sku_counts['kubernetes_engine']}, "
+                f"Other: {service_sku_counts['other']}")
+    
+    return relevant_skus, service_sku_counts
+
+
+def identify_plans_without_skus(classified_plans: Dict[str, List[Dict]], 
+                                service_sku_counts: Dict[str, int]) -> List[str]:
+    """Identify plans that have no matching SKUs."""
+    plans_without_skus = []
+    
+    # Check if each plan category has matching SKUs
+    if classified_plans['machine'] and service_sku_counts['compute_engine'] == 0:
+        plans_without_skus.extend([plan['name'] for plan in classified_plans['machine']])
+    
+    if classified_plans['storage'] and service_sku_counts['persistent_disk'] == 0:
+        plans_without_skus.extend([plan['name'] for plan in classified_plans['storage']])
+    
+    if classified_plans['kubernetes'] and service_sku_counts['kubernetes_engine'] == 0:
+        plans_without_skus.extend([plan['name'] for plan in classified_plans['kubernetes']])
+    
+    if plans_without_skus:
+        logger.warning(f"Plans with no matching SKUs: {plans_without_skus}")
+    else:
+        logger.info("All plan categories have matching SKUs")
+    
+    return plans_without_skus
 
 
 def save_skus_to_file(skus: List[Dict], file_path: str, metadata: Dict):
-    """Save SKUs to JSON file with metadata."""
+    """Save SKUs to JSON file in original API schema format."""
     logger.info(f"Saving {len(skus)} SKUs to {file_path}")
     
+    # Use original GCP API schema format
     output_data = {
-        'metadata': metadata,
-        'skus': skus
+        'skus': skus,
+        'metadata': metadata
     }
     
     try:
@@ -306,74 +450,22 @@ def save_skus_to_file(skus: List[Dict], file_path: str, metadata: Dict):
         raise
 
 
-def create_sample_output_for_demo(google_plans: List[Dict], instance_types: List[str], instance_families: List[str]):
-    """Create a sample output file demonstrating the expected structure when GCP API is available."""
-    logger.info("Creating sample output to demonstrate script functionality...")
-    
-    # Create sample SKUs that would be returned by GCP API
-    sample_skus = []
-    
-    # Sample compute SKUs for different instance families
-    for family in instance_families[:3]:  # Limit to first 3 families for demo
-        for resource_type in ['vCPU', 'Memory', 'Storage']:
-            sample_sku = {
-                'skuId': f'sample-{family}-{resource_type.lower()}-{hash(family + resource_type) % 10000:04d}',
-                'name': f'services/6F81-5844-456A/skus/sample-{family}-{resource_type.lower()}',
-                'description': f'{family.upper()} {resource_type} for {family} instances',
-                'category': {
-                    'serviceDisplayName': 'Compute Engine',
-                    'resourceFamily': 'Compute' if resource_type in ['vCPU', 'Memory'] else 'Storage',
-                    'resourceGroup': resource_type,
-                    'usageType': 'OnDemand'
-                },
-                'serviceRegions': [GCP_REGION],
-                'pricingInfo': [{
-                    'summary': f'OnDemand {resource_type} for {family} instances',
-                    'pricingExpression': {
-                        'usageUnit': 'hour',
-                        'usageUnitDescription': 'hour',
-                        'baseUnit': 'hour',
-                        'baseUnitDescription': 'hour',
-                        'baseUnitConversionFactor': 1,
-                        'displayQuantity': 1,
-                        'tieredRates': [{
-                            'startUsageAmount': '0',
-                            'unitPrice': {
-                                'currencyCode': 'USD',
-                                'units': '0',
-                                'nanos': int(50000000 * (1 + hash(family) % 10))  # Sample pricing
-                            }
-                        }]
-                    },
-                    'aggregationInfo': {'aggregationLevel': 'ACCOUNT', 'aggregationInterval': 'DAILY', 'aggregationCount': 1},
-                    'currencyConversionRate': 1,
-                    'effectiveTime': '2025-01-01T00:00:00Z'
-                }],
-                'serviceProviderName': 'Google'
-            }
-            sample_skus.append(sample_sku)
-    
-    # Create metadata for sample output
-    metadata = {
-        'timestamp': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()),
-        'region': GCP_REGION,
-        'compute_engine_service_id': 'sample-6F81-5844-456A',
-        'total_service_plans': len(google_plans),
-        'google_service_plans': len(google_plans),
-        'total_skus_fetched': len(sample_skus) * 10,  # Simulate larger dataset
-        'relevant_skus_found': len(sample_skus),
-        'instance_types_discovered': instance_types,
-        'instance_families_discovered': instance_families,
-        'note': 'This is sample data created for demonstration. Real data would come from GCP Billing API.'
-    }
-    
-    save_skus_to_file(sample_skus, OUTPUT_FILE, metadata)
-    return sample_skus
+def parse_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(description='Discover GCP SKUs aligned to Morpheus service plans')
+    parser.add_argument('--region', default='asia-southeast2', 
+                        help='GCP region to filter SKUs (default: asia-southeast2)')
+    return parser.parse_args()
 
 
 def main():
     """Main function to orchestrate the SKU discovery process."""
     logger.info("Starting GCP SKU discovery process")
+    
+    # Parse command line arguments
+    args = parse_arguments()
+    region = args.region
+    logger.info(f"Configured region: {region}")
     
     # Check for required dependencies
     if not GCP_API_AVAILABLE:
@@ -382,6 +474,11 @@ def main():
     
     if not os.path.exists(SERVICE_PLANS_FILE):
         logger.error(f"Service plans file not found: {SERVICE_PLANS_FILE}")
+        sys.exit(1)
+    
+    if not GOOGLE_APPLICATION_CREDENTIALS:
+        logger.error("GOOGLE_APPLICATION_CREDENTIALS environment variable not set")
+        logger.error("Please set the path to your Google Cloud service account JSON file")
         sys.exit(1)
     
     try:
@@ -394,82 +491,100 @@ def main():
             logger.error("No Google service plans found")
             sys.exit(1)
         
-        # Log some example Google service plans
+        # Log sample Google service plans
         logger.info("Sample Google service plans found:")
-        for i, plan in enumerate(google_plans[:5]):  # Show first 5
+        for i, plan in enumerate(google_plans[:5]):
             logger.info(f"  {i+1}. {plan.get('name', 'N/A')} (code: {plan.get('code', 'N/A')})")
         if len(google_plans) > 5:
             logger.info(f"  ... and {len(google_plans) - 5} more Google service plans")
         
-        # Step 2: Extract instance types and families
-        logger.info("Step 2: Extracting instance types from service plans")
-        instance_types, instance_families = extract_instance_types_from_plans(google_plans)
+        # Step 2: Extract and classify plan details
+        logger.info("Step 2: Extracting and classifying plan details")
+        classified_plans = extract_plan_details(google_plans)
         
-        # Validate environment
-        if not GOOGLE_APPLICATION_CREDENTIALS:
-            logger.warning("GOOGLE_APPLICATION_CREDENTIALS environment variable not set")
-            logger.info("Creating sample output to demonstrate script functionality...")
-            create_sample_output_for_demo(google_plans, instance_types, instance_families)
-            
-            logger.info("=== GCP SKU Discovery Summary (Sample Mode) ===")
-            logger.info(f"Total service plans loaded: {len(service_plans)}")
-            logger.info(f"Google service plans found: {len(google_plans)}")
-            logger.info(f"Instance families: {len(instance_families)} ({', '.join(sorted(instance_families))})")
-            logger.info(f"Instance types: {len(instance_types)}")
-            logger.info(f"Sample output saved to: {OUTPUT_FILE}")
-            logger.info("Note: This is sample data. Set GOOGLE_APPLICATION_CREDENTIALS to fetch real GCP SKUs")
-            return
+        # Step 3: Create SKU mapping patterns
+        logger.info("Step 3: Creating SKU mapping patterns")
+        sku_patterns = create_sku_mapping_patterns(classified_plans)
         
-        # Step 3: Initialize GCP Billing client
-        logger.info("Step 3: Initializing GCP Billing API client")
+        # Step 4: Initialize GCP Billing client
+        logger.info("Step 4: Initializing GCP Billing API client")
         gcp_client = GCPBillingClient(GOOGLE_APPLICATION_CREDENTIALS)
         
-        # Step 4: Get services and find Compute Engine
-        logger.info("Step 4: Finding Compute Engine service")
+        # Step 5: Get services and find relevant service IDs
+        logger.info("Step 5: Finding relevant GCP services")
         services = gcp_client.get_services()
-        compute_engine_service_id = gcp_client.find_compute_engine_service(services)
         
-        if not compute_engine_service_id:
-            logger.error("Could not find Compute Engine service")
+        # Get service IDs for all relevant services
+        all_service_names = set()
+        for service_config in SERVICE_MAPPING.values():
+            all_service_names.update(service_config['service_names'])
+        
+        found_services = gcp_client.find_services_by_names(services, list(all_service_names))
+        
+        if not found_services:
+            logger.error("Could not find any relevant GCP services")
             sys.exit(1)
         
-        # Step 5: Fetch all SKUs for Compute Engine
-        logger.info("Step 5: Fetching Compute Engine SKUs")
-        all_skus = gcp_client.get_skus(
-            service_id=compute_engine_service_id,
-            currency_code="USD",
-            region_filter=GCP_REGION
+        # Step 6: Fetch SKUs from all relevant services
+        logger.info("Step 6: Fetching SKUs from relevant services")
+        all_skus = []
+        service_fetch_counts = {}
+        
+        for service_name, service_id in found_services.items():
+            logger.info(f"Fetching SKUs for {service_name} (ID: {service_id})")
+            service_skus = gcp_client.get_skus(
+                service_id=service_id,
+                currency_code="USD",
+                region_filter=region
+            )
+            all_skus.extend(service_skus)
+            service_fetch_counts[service_name] = len(service_skus)
+            logger.info(f"Fetched {len(service_skus)} SKUs from {service_name}")
+        
+        logger.info(f"Total SKUs fetched across all services: {len(all_skus)}")
+        
+        # Step 7: Filter relevant SKUs
+        logger.info("Step 7: Filtering relevant SKUs")
+        relevant_skus, service_sku_counts = filter_relevant_skus(
+            all_skus, sku_patterns, classified_plans
         )
         
-        # Step 6: Filter relevant SKUs
-        logger.info("Step 6: Filtering relevant SKUs")
-        relevant_skus = filter_relevant_skus(
-            all_skus, instance_types, instance_families, google_plans
-        )
+        # Step 8: Identify plans without matching SKUs
+        logger.info("Step 8: Identifying plans without matching SKUs")
+        plans_without_skus = identify_plans_without_skus(classified_plans, service_sku_counts)
         
-        # Step 7: Prepare metadata and save results
-        logger.info("Step 7: Saving results")
+        # Step 9: Prepare metadata and save results
+        logger.info("Step 9: Saving results")
         metadata = {
             'timestamp': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()),
-            'region': GCP_REGION,
-            'compute_engine_service_id': compute_engine_service_id,
+            'region': region,
+            'services_found': found_services,
             'total_service_plans': len(service_plans),
             'google_service_plans': len(google_plans),
+            'classified_plans': {k: len(v) for k, v in classified_plans.items()},
             'total_skus_fetched': len(all_skus),
+            'skus_fetched_per_service': service_fetch_counts,
             'relevant_skus_found': len(relevant_skus),
-            'instance_types_discovered': instance_types,
-            'instance_families_discovered': instance_families
+            'skus_by_service_type': service_sku_counts,
+            'sku_patterns_used': sku_patterns,
+            'plans_without_matching_skus': plans_without_skus
         }
         
         save_skus_to_file(relevant_skus, OUTPUT_FILE, metadata)
         
         # Log summary
         logger.info("=== GCP SKU Discovery Summary ===")
+        logger.info(f"Configured region: {region}")
         logger.info(f"Total service plans loaded: {metadata['total_service_plans']}")
         logger.info(f"Google service plans found: {metadata['google_service_plans']}")
+        logger.info(f"Services discovered: {list(found_services.keys())}")
         logger.info(f"Total SKUs fetched from GCP: {metadata['total_skus_fetched']}")
-        logger.info(f"Relevant SKUs filtered: {metadata['relevant_skus_found']}")
-        logger.info(f"Instance families: {len(instance_families)} ({', '.join(sorted(instance_families))})")
+        for service_name, count in service_fetch_counts.items():
+            logger.info(f"  {service_name}: {count} SKUs")
+        logger.info(f"Relevant SKUs after filtering: {metadata['relevant_skus_found']}")
+        logger.info(f"SKU breakdown by type: {service_sku_counts}")
+        if plans_without_skus:
+            logger.warning(f"Plans with no matching SKUs ({len(plans_without_skus)}): {plans_without_skus}")
         logger.info(f"Results saved to: {OUTPUT_FILE}")
         logger.info("GCP SKU discovery completed successfully")
         
@@ -478,7 +593,7 @@ def main():
         sys.exit(1)
     except Exception as e:
         logger.error(f"Discovery process failed: {e}")
-        sys.exit(1)
+        raise
 
 
 if __name__ == "__main__":
