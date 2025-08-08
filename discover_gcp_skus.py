@@ -625,6 +625,8 @@ def parse_arguments():
                         help='GCP region to filter SKUs (default: asia-southeast2)')
     parser.add_argument('--dump-services-only', action='store_true',
                         help='Only fetch and dump the list of GCP billing services, then exit')
+    parser.add_argument('--all-region-skus', action='store_true',
+                        help='Fetch ALL GCP SKUs for the specified region (and GLOBAL) across ALL services; skips Morpheus service plan filtering')
     return parser.parse_args()
 
 
@@ -636,15 +638,20 @@ def main():
     args = parse_arguments()
     region = args.region
     dump_services_only = args.dump_services_only
+    all_region_skus = getattr(args, 'all_region_skus', False)
     logger.info(f"Configured region: {region}")
     if dump_services_only:
         logger.info("Running in dump-services-only mode")
+    if all_region_skus:
+        logger.info("Running in ALL-REGION-SKUS mode (skipping Morpheus plan filtering)")
     
     # Google Cloud API libraries missing will trigger REST fallback via gcloud if available
     
-    if not os.path.exists(SERVICE_PLANS_FILE):
-        logger.error(f"Service plans file not found: {SERVICE_PLANS_FILE}")
-        sys.exit(1)
+    # Only require service_plans.json if not running in all-region-skus mode
+    if not all_region_skus:
+        if not os.path.exists(SERVICE_PLANS_FILE):
+            logger.error(f"Service plans file not found: {SERVICE_PLANS_FILE}")
+            sys.exit(1)
     
     if GCP_API_AVAILABLE and not GOOGLE_APPLICATION_CREDENTIALS:
         logger.error("GOOGLE_APPLICATION_CREDENTIALS environment variable not set")
@@ -652,29 +659,36 @@ def main():
         sys.exit(1)
     
     try:
-        # Step 1: Load and filter service plans
-        logger.info("Step 1: Loading and filtering service plans")
-        service_plans = load_service_plans(SERVICE_PLANS_FILE)
-        google_plans = filter_google_service_plans(service_plans)
-        
-        if not google_plans:
-            logger.error("No Google service plans found")
-            sys.exit(1)
-        
-        # Log sample Google service plans
-        logger.info("Sample Google service plans found:")
-        for i, plan in enumerate(google_plans[:5]):
-            logger.info(f"  {i+1}. {plan.get('name', 'N/A')} (code: {plan.get('code', 'N/A')})")
-        if len(google_plans) > 5:
-            logger.info(f"  ... and {len(google_plans) - 5} more Google service plans")
-        
-        # Step 2: Extract and classify plan details
-        logger.info("Step 2: Extracting and classifying plan details")
-        classified_plans = extract_plan_details(google_plans)
-        
-        # Step 3: Create SKU mapping patterns
-        logger.info("Step 3: Creating SKU mapping patterns")
-        sku_patterns = create_sku_mapping_patterns(classified_plans)
+        # Step 1: Load and filter service plans (skip when all-region-skus is enabled)
+        if not all_region_skus:
+            logger.info("Step 1: Loading and filtering service plans")
+            service_plans = load_service_plans(SERVICE_PLANS_FILE)
+            google_plans = filter_google_service_plans(service_plans)
+            
+            if not google_plans:
+                logger.error("No Google service plans found")
+                sys.exit(1)
+            
+            # Log sample Google service plans
+            logger.info("Sample Google service plans found:")
+            for i, plan in enumerate(google_plans[:5]):
+                logger.info(f"  {i+1}. {plan.get('name', 'N/A')} (code: {plan.get('code', 'N/A')})")
+            if len(google_plans) > 5:
+                logger.info(f"  ... and {len(google_plans) - 5} more Google service plans")
+            
+            # Step 2: Extract and classify plan details
+            logger.info("Step 2: Extracting and classifying plan details")
+            classified_plans = extract_plan_details(google_plans)
+            
+            # Step 3: Create SKU mapping patterns
+            logger.info("Step 3: Creating SKU mapping patterns")
+            sku_patterns = create_sku_mapping_patterns(classified_plans)
+        else:
+            logger.info("Skipping Steps 1-3 (service plan filtering and SKU pattern creation) due to ALL-REGION-SKUS mode")
+            service_plans = []
+            google_plans = []
+            classified_plans = {'machine': [], 'storage': [], 'kubernetes': []}
+            sku_patterns = {'compute_engine': [], 'persistent_disk': [], 'kubernetes_engine': []}
         
         # Step 4: Initialize GCP Billing client
         logger.info("Step 4: Initializing GCP Billing API client")
@@ -701,7 +715,54 @@ def main():
             logger.info("Services dumped successfully. Exiting as requested by --dump-services-only")
             return
         
-        # Get service IDs for all relevant services
+        # If ALL-REGION-SKUS mode, fetch SKUs from ALL services and skip filtering
+        if all_region_skus:
+            logger.info("Step 6 (ALL-REGION-SKUS): Fetching SKUs from ALL discovered services")
+            all_skus = []
+            service_fetch_counts = {}
+            # Build a mapping of displayName -> serviceId for metadata/logging
+            all_services_found = {}
+            for svc in services:
+                display_name = svc.get('displayName') or svc.get('name', '')
+                # Support both SDK and REST response structures
+                service_id = svc.get('serviceId') or (svc.get('name', '').split('/')[-1] if svc.get('name') else '')
+                if not service_id:
+                    continue
+                all_services_found[display_name] = service_id
+                logger.info(f"Fetching SKUs for {display_name} (ID: {service_id})")
+                service_skus = gcp_client.get_skus(
+                    service_id=service_id,
+                    currency_code="USD",
+                    region_filter=region
+                )
+                all_skus.extend(service_skus)
+                service_fetch_counts[display_name] = len(service_skus)
+                logger.info(f"Fetched {len(service_skus)} SKUs from {display_name}")
+            logger.info(f"Total SKUs fetched across ALL services: {len(all_skus)}")
+            
+            # Save results without Morpheus-specific filtering
+            metadata = {
+                'timestamp': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()),
+                'region': region,
+                'mode': 'all_region_skus',
+                'total_services_discovered': len(services),
+                'services_found': all_services_found,
+                'total_skus_fetched': len(all_skus),
+                'skus_fetched_per_service': service_fetch_counts,
+            }
+            save_skus_to_file(all_skus, OUTPUT_FILE, metadata)
+            
+            # Log summary and exit
+            logger.info("=== GCP SKU Discovery Summary (ALL-REGION-SKUS) ===")
+            logger.info(f"Configured region: {region}")
+            logger.info(f"Total services discovered: {len(services)}")
+            logger.info(f"Total SKUs fetched from GCP: {metadata['total_skus_fetched']}")
+            logger.info(f"Results saved to: {OUTPUT_FILE}")
+            logger.info(f"Services saved to: {OUTPUT_SERVICES_FILE}")
+            logger.info("GCP SKU discovery completed successfully")
+            return
+        
+        # Get service IDs for all relevant services (original behavior)
         all_service_names = set()
         for service_config in SERVICE_MAPPING.values():
             all_service_names.update(service_config['service_names'])
