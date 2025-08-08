@@ -2,8 +2,8 @@
 """
 Script 1: discover_service_plans.py
 
-This script discovers and manages service plans for Google Cloud in HPE Morpheus v8.0.7.
-It checks if a Google Cloud service plan exists, and creates one if missing.
+This script discovers existing service plans from HPE Morpheus v8.0.7.
+It retrieves all service plans via GET /api/service-plans and stores them in service_plans.json.
 
 Usage:
     python3 discover_service_plans.py
@@ -17,7 +17,7 @@ Environment Variables:
     PRICE_PREFIX = "IOH-CP"
 
 Output:
-    service_plans.json - Contains discovered/created service plan data
+    service_plans.json - Contains discovered service plan data
 """
 
 import os
@@ -80,45 +80,49 @@ class MorpheusAPIClient:
                 
         raise Exception(f"Request failed after {max_retries} attempts")
     
-    def get_service_plans(self, params: Dict = None) -> List[Dict]:
-        """Get all service plans"""
-        response = self.make_request('GET', '/service-plans', params=params)
-        if response.status_code == 200:
-            data = response.json()
-            return data.get('servicePlans', [])
-        else:
-            logger.error(f"Failed to get service plans: {response.status_code} - {response.text}")
-            return []
-    
-    def get_service_plan_by_code(self, code: str) -> Optional[Dict]:
-        """Get service plan by code"""
-        params = {'code': code}
-        response = self.make_request('GET', '/service-plans', params=params)
-        if response.status_code == 200:
-            data = response.json()
-            plans = data.get('servicePlans', [])
-            for plan in plans:
-                if plan.get('code') == code:
-                    return plan
-        return None
-    
-    def create_service_plan(self, service_plan_data: Dict) -> Optional[Dict]:
-        """Create a new service plan"""
-        response = self.make_request('POST', '/service-plans', data=service_plan_data)
-        if response.status_code == 200:
-            data = response.json()
-            if data.get('success'):
-                return data.get('servicePlan')
+    def get_all_service_plans(self, max_results: int = 10000) -> List[Dict]:
+        """Get all service plans without filtering"""
+        all_plans = []
+        offset = 0
+        page_size = 100  # Reasonable page size
+        
+        while True:
+            params = {
+                'max': page_size,
+                'offset': offset
+            }
+            
+            response = self.make_request('GET', '/service-plans', params=params)
+            if response.status_code == 200:
+                data = response.json()
+                plans = data.get('servicePlans', [])
+                
+                if not plans:
+                    break  # No more results
+                    
+                all_plans.extend(plans)
+                logger.info(f"Retrieved {len(plans)} service plans (offset: {offset}, total so far: {len(all_plans)})")
+                
+                # Check if we've reached the end
+                if len(plans) < page_size:
+                    break
+                    
+                offset += page_size
+                
+                # Safety check to prevent infinite loops
+                if len(all_plans) >= max_results:
+                    logger.warning(f"Reached maximum results limit ({max_results})")
+                    break
+                    
             else:
-                logger.error(f"Service plan creation failed: {data}")
-                return None
-        else:
-            logger.error(f"Failed to create service plan: {response.status_code} - {response.text}")
-            return None
+                logger.error(f"Failed to get service plans: {response.status_code} - {response.text}")
+                break
+        
+        return all_plans
 
 def load_environment() -> Dict[str, str]:
     """Load and validate environment variables"""
-    required_vars = ['MORPHEUS_TOKEN', 'MORPHEUS_URL', 'PRICE_PREFIX']
+    required_vars = ['MORPHEUS_TOKEN', 'MORPHEUS_URL']
     env_vars = {}
     
     for var in required_vars:
@@ -128,51 +132,28 @@ def load_environment() -> Dict[str, str]:
             sys.exit(1)
         env_vars[var] = value
     
+    # PRICE_PREFIX is optional for discovery
+    env_vars['PRICE_PREFIX'] = os.getenv('PRICE_PREFIX', 'IOH-CP')
+    
     logger.info("Environment variables loaded successfully")
     return env_vars
-
-def create_google_cloud_service_plan(prefix: str) -> Dict[str, Any]:
-    """Create service plan data structure for Google Cloud"""
-    return {
-        "servicePlan": {
-            "name": f"{prefix} Google Cloud Service Plan",
-            "code": f"{prefix.lower()}-google-cloud-plan",
-            "description": "Service plan for Google Cloud pricing integration",
-            "editable": True,
-            "provisionType": {
-                "code": "googlecloud"
-            },
-            "visibility": "public",
-            "active": True,
-            "sortOrder": 100,
-            "config": {
-                "storageSizeType": "GB",
-                "memorySizeType": "MB",
-                "ranges": {
-                    "minStorage": 0,
-                    "maxStorage": 0,
-                    "minMemory": 0,
-                    "maxMemory": 0,
-                    "minCores": 0,
-                    "maxCores": 0,
-                    "minSockets": 0,
-                    "maxSockets": 0,
-                    "minCoresPerSocket": 0,
-                    "maxCoresPerSocket": 0
-                }
-            }
-        }
-    }
 
 def save_service_plans(service_plans: List[Dict], filename: str = 'service_plans.json') -> None:
     """Save service plans data to JSON file"""
     try:
+        # Check if file exists for idempotency logging
+        file_exists = os.path.exists(filename)
+        if file_exists:
+            logger.info(f"File {filename} exists, will overwrite with new data")
+        
         with open(filename, 'w') as f:
             json.dump({
                 'servicePlans': service_plans,
                 'metadata': {
                     'timestamp': time.time(),
-                    'count': len(service_plans)
+                    'count': len(service_plans),
+                    'discovery_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'source': 'morpheus-api'
                 }
             }, f, indent=2)
         logger.info(f"Service plans data saved to {filename}")
@@ -181,8 +162,8 @@ def save_service_plans(service_plans: List[Dict], filename: str = 'service_plans
         raise
 
 def main():
-    """Main function to discover/create Google Cloud service plans"""
-    logger.info("Starting service plan discovery for Google Cloud")
+    """Main function to discover all service plans from Morpheus"""
+    logger.info("Starting service plan discovery from Morpheus")
     
     # Load environment variables
     env_vars = load_environment()
@@ -190,32 +171,28 @@ def main():
     # Initialize Morpheus API client
     client = MorpheusAPIClient(env_vars['MORPHEUS_URL'], env_vars['MORPHEUS_TOKEN'])
     
-    # Define service plan code
-    plan_code = f"{env_vars['PRICE_PREFIX'].lower()}-google-cloud-plan"
-    
     try:
-        # Check if Google Cloud service plan already exists
-        logger.info(f"Checking for existing service plan with code: {plan_code}")
-        existing_plan = client.get_service_plan_by_code(plan_code)
+        # Get all service plans
+        logger.info("Retrieving all service plans from Morpheus...")
+        service_plans = client.get_all_service_plans()
         
-        if existing_plan:
-            logger.info(f"Found existing Google Cloud service plan: {existing_plan['name']} (ID: {existing_plan['id']})")
-            service_plans = [existing_plan]
+        if service_plans:
+            logger.info(f"Successfully discovered {len(service_plans)} service plans")
+            
+            # Log some basic statistics
+            provision_types = {}
+            for plan in service_plans:
+                prov_type = plan.get('provisionType', {}).get('name', 'Unknown')
+                provision_types[prov_type] = provision_types.get(prov_type, 0) + 1
+            
+            logger.info("Service plans by provision type:")
+            for prov_type, count in sorted(provision_types.items()):
+                logger.info(f"  {prov_type}: {count}")
+                
         else:
-            logger.info("Google Cloud service plan not found, creating new one")
-            
-            # Create new service plan
-            plan_data = create_google_cloud_service_plan(env_vars['PRICE_PREFIX'])
-            created_plan = client.create_service_plan(plan_data)
-            
-            if created_plan:
-                logger.info(f"Successfully created Google Cloud service plan: {created_plan['name']} (ID: {created_plan['id']})")
-                service_plans = [created_plan]
-            else:
-                logger.error("Failed to create Google Cloud service plan")
-                sys.exit(1)
+            logger.warning("No service plans found in Morpheus")
         
-        # Save service plans data
+        # Save service plans data (even if empty, for idempotency)
         save_service_plans(service_plans)
         
         logger.info("Service plan discovery completed successfully")
